@@ -32,9 +32,10 @@
               "RelativeDocumentMoniker": "translator\\Form1.Designer.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.Designer.cs",
               "RelativeToolTip": "translator\\Form1.Designer.cs",
-              "ViewState": "AQIAAFoAAAAAAAAAAAAowE0AAAAYAAAA",
+              "ViewState": "AQIAAGQAAAAAAAAAAADwv3UAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-23T11:37:36.999Z"
+              "WhenOpened": "2024-06-23T11:37:36.999Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -44,7 +45,7 @@
               "RelativeDocumentMoniker": "translator\\Form1.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs",
               "RelativeToolTip": "translator\\Form1.cs",
-              "ViewState": "AQIAAFMBAAAAAAAAAAAiwGYBAAAAAAAA",
+              "ViewState": "AQIAAD0BAAAAAAAAAAAiwFgBAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-23T11:19:53.269Z",
               "EditorCaption": ""
@@ -55,10 +56,11 @@
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs",
               "RelativeDocumentMoniker": "translator\\Form1.cs",
-              "ToolTip": "C:\\Users\\arsta\\source\\repos\\translator\\translator\\Form1.cs [Design]",
-              "RelativeToolTip": "..\\..\\..\\Users\\arsta\\source\\repos\\translator\\translator\\Form1.cs [Design]",
+              "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs [Design]",
+              "RelativeToolTip": "translator\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-23T13:52:57.035Z"
+              "WhenOpened": "2024-06-23T13:52:57.035Z",
+              "EditorCaption": " [Design]"
             }
           ]
         }

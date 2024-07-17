@@ -45,7 +45,6 @@
             label1.Size = new Size(19, 15);
             label1.TabIndex = 1;
             label1.Text = "To";
-            label1.Click += label1_Click;
             // 
             // textBox1
             // 
@@ -63,7 +62,6 @@
             label3.Size = new Size(48, 15);
             label3.TabIndex = 3;
             label3.Text = "API KEY";
-            label3.Click += label3_Click;
             // 
             // button1
             // 
@@ -82,7 +80,6 @@
             comboBox1.Name = "comboBox2";
             comboBox1.Size = new Size(121, 23);
             comboBox1.TabIndex = 0;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // checkedListBox1
             // 
@@ -92,7 +89,6 @@
             checkedListBox1.Name = "checkedListBox1";
             checkedListBox1.Size = new Size(551, 328);
             checkedListBox1.TabIndex = 5;
-            checkedListBox1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
             checkedListBox1.Items.Clear();
             // 
             // button2
