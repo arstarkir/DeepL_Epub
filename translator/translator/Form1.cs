@@ -18,6 +18,7 @@ namespace translator
         public Form1()
         {
             InitializeComponent();
+            comboBox1.Items.Add(new ItemDisplay<string>("UK", "Ukrainian"));
             comboBox1.Items.Add(new ItemDisplay<string>("BG", "Bulgarian"));
             comboBox1.Items.Add(new ItemDisplay<string>("ZH", "Chinese"));
             comboBox1.Items.Add(new ItemDisplay<string>("CS", "Czech"));
@@ -47,8 +48,7 @@ namespace translator
             comboBox1.Items.Add(new ItemDisplay<string>("SL", "Slovenian"));
             comboBox1.Items.Add(new ItemDisplay<string>("ES", "Spanish"));
             comboBox1.Items.Add(new ItemDisplay<string>("SV", "Swedish"));
-            comboBox1.Items.Add(new ItemDisplay<string>("UK", "Ukrainian"));
-
+            comboBox1.SelectedItem = comboBox1.Items[0];
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -93,11 +93,13 @@ namespace translator
 
                         await WaitForButtonPressAsync();
 
+                        string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetCountryCode() : null;
+
                         var checkedTitles = checkedListBox1.CheckedItems.OfType<string>().ToList();
                         List<string> checkedFilePaths = checkedTitles.Select(title => titleToFileMap[title]).ToList();
                         foreach(var checkedFilePath in checkedFilePaths)
                         {
-                            string result = await TranslateTextWithDeepL(textBox1.Text, checkedFilePath, "UK");
+                            string result = await TranslateTextWithDeepL(textBox1.Text, checkedFilePath, countryCode); 
                             await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
                             CorrectHtmlFile(checkedFilePath);
                         }

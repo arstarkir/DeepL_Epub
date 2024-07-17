@@ -9,15 +9,18 @@ namespace translator
     public class ItemDisplay<TValue>
     {
         private readonly string m_displayText;
+        private TValue countryCode { get; set; }
 
-        public ItemDisplay(TValue value, String displayText)
+        public ItemDisplay(TValue countryCode, String displayCountry)
         {
-            this.Value = value;
-            m_displayText = displayText;
+            this.countryCode = countryCode;
+            m_displayText = displayCountry;
         }
 
-        public TValue Value { get; set; }
-
+        public string GetCountryCode()
+        {
+            return typeof(TValue) == typeof(string) ? countryCode.ToString() : null;
+        }
         public override string ToString()
         {
             return m_displayText;

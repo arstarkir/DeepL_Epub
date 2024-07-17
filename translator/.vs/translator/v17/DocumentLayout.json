@@ -7,12 +7,16 @@
       "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|C:\\Git\\DeepL_Epub\\translator\\translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\git\\deepl_epub\\translator\\translator\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\git\\deepl_epub\\translator\\translator\\itemdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\itemdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|C:\\Git\\DeepL_Epub\\translator\\translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,17 +26,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "ItemDisplay.cs",
+              "DocumentMoniker": "C:\\Git\\DeepL_Epub\\translator\\translator\\ItemDisplay.cs",
+              "RelativeDocumentMoniker": "translator\\ItemDisplay.cs",
+              "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\ItemDisplay.cs",
+              "RelativeToolTip": "translator\\ItemDisplay.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBMAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-17T12:48:09.33Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "translator\\Form1.Designer.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.Designer.cs",
               "RelativeToolTip": "translator\\Form1.Designer.cs",
-              "ViewState": "AQIAAGQAAAAAAAAAAADwv3UAAAAeAAAA",
+              "ViewState": "AQIAADoAAAAAAAAAAADwv08AAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-23T11:37:36.999Z",
               "EditorCaption": ""
@@ -45,14 +62,14 @@
               "RelativeDocumentMoniker": "translator\\Form1.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs",
               "RelativeToolTip": "translator\\Form1.cs",
-              "ViewState": "AQIAAD0BAAAAAAAAAAAiwFgBAAAFAAAA",
+              "ViewState": "AQIAADsAAAAAAAAAAAAAwFkAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-23T11:19:53.269Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs",
               "RelativeDocumentMoniker": "translator\\Form1.cs",
