@@ -71,9 +71,8 @@ namespace translator
                     foreach (string filePath in openFileDialog.FileNames)
                     {
 
-                        string workingDirectory = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+                        string workingDirectory = Path.GetDirectoryName(filePath);
                         string newFilePath = Path.Combine(workingDirectory, Path.GetFileNameWithoutExtension(filePath) + ".zip");
-                        MessageBox.Show($"{workingDirectory}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         if (File.Exists(newFilePath))
                             File.Delete(newFilePath);
                         File.Copy(filePath, newFilePath);
