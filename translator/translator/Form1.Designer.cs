@@ -113,8 +113,8 @@
             Controls.Add(textBox1);
             Controls.Add(comboBox1);
             Controls.Add(label1);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "DeepL_Epub";
+            Text = "DeepL_Epub";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
