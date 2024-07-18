@@ -1,8 +1,8 @@
 # DeepL_Epub
 
-A Tool for people to translate .epub books easily!
+[Eng] A Tool for people to translate .epub books easily!
 
-Інструмент для легкого перекладу книг формату .epub!
+[Ukr] Інструмент для легкого перекладу книг формату .epub!
 
 ## Application concept
 
