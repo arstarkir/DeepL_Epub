@@ -99,7 +99,7 @@ namespace translator
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
                             string result = await TranslateTextWithDeepL(textBox1.Text, checkedFilePath, countryCode
-                                , (checkBox1.Checked) ? "https://api.deepl.com/v2/translate" : "https://api-free.deepl.com/v2/translate");
+                                , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate" );
                             await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
                             CorrectHtmlFile(checkedFilePath);
                         }
@@ -234,7 +234,8 @@ namespace translator
                         {
                             if (file.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) ||
                                 file.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
-                                file.EndsWith(".xhtml", StringComparison.OrdinalIgnoreCase))
+                                file.EndsWith(".xhtml", StringComparison.OrdinalIgnoreCase) || 
+                                file.EndsWith(".htm", StringComparison.OrdinalIgnoreCase))
                             {
                                 textFiles.Add(file);
                             }
