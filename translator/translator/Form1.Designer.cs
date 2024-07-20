@@ -35,6 +35,7 @@
             comboBox1 = new ComboBox();
             checkedListBox1 = new CheckedListBox();
             button2 = new Button();
+            checkBox1 = new CheckBox();
             SuspendLayout();
             // 
             // label1
@@ -52,7 +53,6 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 2;
-            textBox1.Text = "";
             // 
             // label3
             // 
@@ -73,23 +73,21 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // comboBox2
+            // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(129, 48);
-            comboBox1.Name = "comboBox2";
+            comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(121, 23);
             comboBox1.TabIndex = 0;
             // 
             // checkedListBox1
             // 
             checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Items.AddRange(new object[] { "Nothing" });
             checkedListBox1.Location = new Point(104, 86);
             checkedListBox1.Name = "checkedListBox1";
             checkedListBox1.Size = new Size(551, 328);
             checkedListBox1.TabIndex = 5;
-            checkedListBox1.Items.Clear();
             // 
             // button2
             // 
@@ -101,11 +99,22 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(172, 9);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(83, 19);
+            checkBox1.TabIndex = 7;
+            checkBox1.Text = "Free Key";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(checkBox1);
             Controls.Add(button2);
             Controls.Add(checkedListBox1);
             Controls.Add(button1);
@@ -113,7 +122,7 @@
             Controls.Add(textBox1);
             Controls.Add(comboBox1);
             Controls.Add(label1);
-            Name = "DeepL_Epub";
+            Name = "Form1";
             Text = "DeepL_Epub";
             Load += Form1_Load;
             ResumeLayout(false);
@@ -128,6 +137,7 @@
         private ComboBox comboBox1;
         private CheckedListBox checkedListBox1;
         private Button button2;
+        private CheckBox checkBox1;
     }
 
 }
