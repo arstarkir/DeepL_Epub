@@ -36,6 +36,7 @@
             checkedListBox1 = new CheckedListBox();
             button2 = new Button();
             checkBox1 = new CheckBox();
+            checkBox2 = new CheckBox();
             SuspendLayout();
             // 
             // label1
@@ -104,16 +105,27 @@
             checkBox1.AutoSize = true;
             checkBox1.Location = new Point(172, 9);
             checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(83, 19);
+            checkBox1.Size = new Size(70, 19);
             checkBox1.TabIndex = 7;
             checkBox1.Text = "Free Key";
             checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(567, 322);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(70, 19);
+            checkBox2.TabIndex = 8;
+            checkBox2.Text = "Full Book";
+            checkBox2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(checkBox2);
             Controls.Add(checkBox1);
             Controls.Add(button2);
             Controls.Add(checkedListBox1);
@@ -138,6 +150,7 @@
         private CheckedListBox checkedListBox1;
         private Button button2;
         private CheckBox checkBox1;
+        private CheckBox checkBox2;
     }
 
 }
