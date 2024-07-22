@@ -95,14 +95,14 @@ namespace translator
 
                         string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetCountryCode() : null;
 
-                        List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath : 
+                        List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath :
                             checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => titleToFileMap[title]).ToList();
                         Controls.Add(progressBar1);
                         progressBar1.Maximum = checkedFilePaths.Count;
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
                             string result = await TranslateTextWithDeepL(textBox1.Text, checkedFilePath, countryCode
-                                , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate" );
+                                , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate");
                             await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
                             CorrectHtmlFile(checkedFilePath);
                         }
@@ -129,7 +129,7 @@ namespace translator
                     titleToFileMap.Add(title, filePath);
                 }
             }
-            if(filePaths.Count() > titleToFileMap.Count())
+            if (filePaths.Count() > titleToFileMap.Count())
             {
                 MessageBox.Show($"Title was not found! Emergency Full Book translation turned on", "HTML Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 checkBox2.Checked = true;
@@ -167,7 +167,7 @@ namespace translator
             }
         }
 
-        public static async Task<string> TranslateTextWithDeepL(string apiKey, string filePath, string targetLangCode, string apiUrl) 
+        public static async Task<string> TranslateTextWithDeepL(string apiKey, string filePath, string targetLangCode, string apiUrl)
         {
             string textToTranslate;
 
@@ -177,7 +177,7 @@ namespace translator
             }
             catch (IOException ex)
             {
-                return $"Error reading file: {ex.Message}"; 
+                return $"Error reading file: {ex.Message}";
             }
 
             using (HttpClient httpClient = new HttpClient())
@@ -237,7 +237,7 @@ namespace translator
                         {
                             if (file.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) ||
                                 file.EndsWith(".html", StringComparison.OrdinalIgnoreCase) ||
-                                file.EndsWith(".xhtml", StringComparison.OrdinalIgnoreCase) || 
+                                file.EndsWith(".xhtml", StringComparison.OrdinalIgnoreCase) ||
                                 file.EndsWith(".htm", StringComparison.OrdinalIgnoreCase))
                             {
                                 textFiles.Add(file);
@@ -329,7 +329,81 @@ namespace translator
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _buttonClickCompletion?.TrySetResult(true);
+            //_buttonClickCompletion?.TrySetResult(true);
+            string directory = "", img = "";
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Select an Image File";
+                openFileDialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.JPEG;*.GIF;*.PNG|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    img = openFileDialog.FileName;
+                }
+            }
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                   directory = dialog.SelectedPath;
+                }
+            }
+                    AddImageToEpub(img,directory);
+        }
+
+        public void AddImageToEpub( string imagePath, string folderPath)
+        {
+            string imagesDirectory = Path.Combine(folderPath, "OEBPS", "Images");
+            if (!Directory.Exists(imagesDirectory))
+                Directory.CreateDirectory(imagesDirectory);
+
+            string imageFileName = Path.GetFileName(imagePath);
+            string destImagePath = Path.Combine(imagesDirectory, imageFileName);
+            File.Copy(imagePath, destImagePath, true);
+
+            string contentFilePath = FindFirstFileWithExtension(folderPath,".opf");
+            UpdateContentFile(contentFilePath, imageFileName);
+        }
+        void UpdateContentFile(string contentFilePath, string imageFileName)
+        {
+            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+            doc.Load(contentFilePath);
+
+            HtmlNode manifestNode = doc.DocumentNode.SelectSingleNode("//opf:manifest");
+            HtmlNode newItem = HtmlNode.CreateNode($"<item id=\"img-{imageFileName}\" href=\"Images/{imageFileName}\" media-type=\"image/jpeg\" />");
+            manifestNode.AppendChild(newItem);
+
+            doc.Save(contentFilePath);
+        }
+
+        public static string FindFirstFileWithExtension(string directoryPath, string extension)
+        {
+            try
+            {
+                if (!Directory.Exists(directoryPath))
+                {
+                    Console.WriteLine("Directory does not exist.");
+                    return null;
+                }
+                var files = Directory.GetFiles(directoryPath, "*" + extension, SearchOption.AllDirectories);
+                if (files.Length > 0)
+                {
+                    return files[0];
+                }
+                else
+                {
+                    Console.WriteLine("No files with the specified extension were found.");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+                return null;
+            }
         }
     }
 }

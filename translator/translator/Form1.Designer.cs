@@ -126,15 +126,14 @@
             progressBar1.Location = new Point(104, 420);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(551, 23);
-            progressBar1.TabIndex = 9;
             progressBar1.Step = 1;
+            progressBar1.TabIndex = 9;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            
             Controls.Add(checkBox2);
             Controls.Add(checkBox1);
             Controls.Add(button2);
