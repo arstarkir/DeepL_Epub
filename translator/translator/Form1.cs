@@ -215,13 +215,14 @@ namespace translator
         {
             List<string> textFiles = new List<string>();
 
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            using (OpenFileDialog dialog = new OpenFileDialog())
             {
-                dialog.Description = "Select the folder containing .xml and .html files";
-                dialog.SelectedPath = directoryPath;
+                dialog.FileName = "Select the folder containing .xml and .html files";
+                dialog.InitialDirectory = directoryPath;
+                dialog.Filter = "All files (*.*)|*.*";
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    string directoryPath2 = dialog.SelectedPath;
+                    string directoryPath2 = Path.GetDirectoryName(dialog.FileName);
 
                     try
                     {
