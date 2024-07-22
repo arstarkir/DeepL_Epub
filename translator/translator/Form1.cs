@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using System.Text.Json;         
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace translator
 {
@@ -96,6 +97,8 @@ namespace translator
 
                         List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath : 
                             checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => titleToFileMap[title]).ToList();
+                        Controls.Add(progressBar1);
+                        progressBar1.Maximum = checkedFilePaths.Count;
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
                             string result = await TranslateTextWithDeepL(textBox1.Text, checkedFilePath, countryCode
@@ -103,7 +106,7 @@ namespace translator
                             await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
                             CorrectHtmlFile(checkedFilePath);
                         }
-
+                        Controls.Remove(progressBar1);
                         RepackToEpub(extractPath, Path.GetFileNameWithoutExtension(filePath));
                     }
                 }
@@ -152,8 +155,7 @@ namespace translator
                 JObject jsonResponse = JObject.Parse(correctedHtml);
                 string translatedXhtml = jsonResponse["translations"][0]["text"].ToString();
                 await File.WriteAllTextAsync(filePath, translatedXhtml, Encoding.UTF8);
-
-                MessageBox.Show("File updated successfully with translated content.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                progressBar1.PerformStep();
             }
             catch (JsonException jsonEx)
             {
@@ -175,7 +177,7 @@ namespace translator
             }
             catch (IOException ex)
             {
-                return $"Error reading file: {ex.Message}";
+                return $"Error reading file: {ex.Message}"; 
             }
 
             using (HttpClient httpClient = new HttpClient())

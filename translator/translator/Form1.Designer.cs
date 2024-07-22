@@ -37,6 +37,7 @@
             button2 = new Button();
             checkBox1 = new CheckBox();
             checkBox2 = new CheckBox();
+            progressBar1 = new ProgressBar();
             SuspendLayout();
             // 
             // label1
@@ -115,16 +116,25 @@
             checkBox2.AutoSize = true;
             checkBox2.Location = new Point(567, 322);
             checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(70, 19);
+            checkBox2.Size = new Size(75, 19);
             checkBox2.TabIndex = 8;
             checkBox2.Text = "Full Book";
             checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // progressBar1
+            // 
+            progressBar1.Location = new Point(104, 420);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(551, 23);
+            progressBar1.TabIndex = 9;
+            progressBar1.Step = 1;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            
             Controls.Add(checkBox2);
             Controls.Add(checkBox1);
             Controls.Add(button2);
@@ -151,6 +161,7 @@
         private Button button2;
         private CheckBox checkBox1;
         private CheckBox checkBox2;
+        private ProgressBar progressBar1;
     }
 
 }
