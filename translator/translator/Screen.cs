@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace translator
 {
-    internal class Screen : Form
+    public partial class Screen : Form
     {
         int id;
         List<Control> toDraw;
 
-        public Screen(int id, List<Control> toDraw)
+        public Screen(int id = 0, List<Control> toDraw = null)
         {
             this.id = id;
             this.toDraw = toDraw;
@@ -24,21 +24,19 @@ namespace translator
 
         public void DrawScrean(Control.ControlCollection control)
         {
-
             foreach (var item in toDraw)
-            {
                 control.Add(item);
-            }
-
         }
         
         public void ClearScrean(Control.ControlCollection control)
         {
             foreach (var item in toDraw)
-            {
                 control.Remove(item);
-            }
-           
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

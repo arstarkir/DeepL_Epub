@@ -39,3 +39,5 @@ C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\refint\translat
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.pdb
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.genruntimeconfig.cache
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\ref\translator.dll
+C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.Epub.resources
+C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.Screen.resources
