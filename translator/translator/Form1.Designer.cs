@@ -38,12 +38,14 @@
             checkBox1 = new CheckBox();
             checkBox2 = new CheckBox();
             progressBar1 = new ProgressBar();
+            comboBox2 = new ComboBox();
+            label2 = new Label();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(104, 54);
+            label1.Location = new Point(191, 49);
             label1.Name = "label1";
             label1.Size = new Size(19, 15);
             label1.TabIndex = 1;
@@ -67,7 +69,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(12, 51);
+            button1.Location = new Point(12, 86);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 4;
@@ -78,7 +80,7 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(129, 48);
+            comboBox1.Location = new Point(216, 43);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(121, 23);
             comboBox1.TabIndex = 0;
@@ -93,7 +95,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(567, 378);
+            button2.Location = new Point(713, 415);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 6;
@@ -114,7 +116,7 @@
             // checkBox2
             // 
             checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(567, 322);
+            checkBox2.Location = new Point(558, 381);
             checkBox2.Name = "checkBox2";
             checkBox2.Size = new Size(75, 19);
             checkBox2.TabIndex = 8;
@@ -129,16 +131,32 @@
             progressBar1.Step = 1;
             progressBar1.TabIndex = 9;
             // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(64, 43);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(121, 23);
+            comboBox2.TabIndex = 9;
+            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 51);
+            label2.Name = "label2";
+            label2.Size = new Size(35, 15);
+            label2.TabIndex = 10;
+            label2.Text = "What";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(checkBox2);
+            Controls.Add(label2);
+            Controls.Add(comboBox2);
             Controls.Add(checkBox1);
-            Controls.Add(button2);
-            Controls.Add(checkedListBox1);
-            Controls.Add(button1);
             Controls.Add(label3);
             Controls.Add(textBox1);
             Controls.Add(comboBox1);
@@ -161,6 +179,8 @@
         private CheckBox checkBox1;
         private CheckBox checkBox2;
         private ProgressBar progressBar1;
+        private ComboBox comboBox2;
+        private Label label2;
     }
 
 }

@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Git\\DeepL_Epub\\translator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\git\\deepl_epub\\translator\\translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\git\\deepl_epub\\translator\\translator\\screen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\screen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|C:\\Git\\DeepL_Epub\\translator\\translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\git\\deepl_epub\\translator\\translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\git\\deepl_epub\\translator\\translator\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,6 +17,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\git\\deepl_epub\\translator\\translator\\itemdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\itemdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|C:\\Git\\DeepL_Epub\\translator\\translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +30,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Screen.cs",
+              "DocumentMoniker": "C:\\Git\\DeepL_Epub\\translator\\translator\\Screen.cs",
+              "RelativeDocumentMoniker": "translator\\Screen.cs",
+              "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Screen.cs",
+              "RelativeToolTip": "translator\\Screen.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAA2wBIAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-23T10:37:52.533Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 3,
@@ -36,9 +53,9 @@
               "RelativeDocumentMoniker": "translator\\ItemDisplay.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\ItemDisplay.cs",
               "RelativeToolTip": "translator\\ItemDisplay.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBMAAAAmAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-17T12:48:09.33Z"
+              "WhenOpened": "2024-07-23T10:34:10.52Z"
             },
             {
               "$type": "Document",
@@ -48,35 +65,33 @@
               "RelativeDocumentMoniker": "translator\\Form1.Designer.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.Designer.cs",
               "RelativeToolTip": "translator\\Form1.Designer.cs",
-              "ViewState": "AQIAAG4AAAAAAAAAAAAowHoAAAAPAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-23T11:37:36.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-23T11:37:36.999Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs",
               "RelativeDocumentMoniker": "translator\\Form1.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs",
               "RelativeToolTip": "translator\\Form1.cs",
-              "ViewState": "AQIAAD8BAAAAAAAAAAAUwE0BAABIAAAA",
+              "ViewState": "AQIAAJQBAAAAAAAAAAAiwLMBAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-23T11:19:53.269Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs",
               "RelativeDocumentMoniker": "translator\\Form1.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs [Design]",
               "RelativeToolTip": "translator\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-23T13:52:57.035Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-06-23T13:52:57.035Z"
             }
           ]
         }

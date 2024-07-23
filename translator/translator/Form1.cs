@@ -10,6 +10,7 @@ using System.Text.Json;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace translator
 {
@@ -50,6 +51,10 @@ namespace translator
             comboBox1.Items.Add(new ItemDisplay<string>("ES", "Spanish"));
             comboBox1.Items.Add(new ItemDisplay<string>("SV", "Swedish"));
             comboBox1.SelectedItem = comboBox1.Items[0];
+
+            comboBox2.Items.Add(new ItemDisplay<Screen>( new Screen(0,new List<Control>()), "Non"));
+            comboBox2.Items.Add(new ItemDisplay<Screen>(new Screen(1,new List<Control> { checkedListBox1, button1, button2, checkBox2 }), ".epub"));
+            comboBox2.SelectedItem = comboBox2.Items[1];
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -93,7 +98,7 @@ namespace translator
 
                         await WaitForButtonPressAsync();
 
-                        string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetCountryCode() : null;
+                        string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
 
                         List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath :
                             checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => titleToFileMap[title]).ToList();
@@ -321,6 +326,7 @@ namespace translator
 
                 //doc.Save(filePath);
             }
+
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
@@ -348,13 +354,13 @@ namespace translator
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                   directory = dialog.SelectedPath;
+                    directory = dialog.SelectedPath;
                 }
             }
-                    AddImageToEpub(img,directory);
+            AddImageToEpub(img, directory);
         }
 
-        public void AddImageToEpub( string imagePath, string folderPath)
+        public void AddImageToEpub(string imagePath, string folderPath)
         {
             string imagesDirectory = Path.Combine(folderPath, "OEBPS", "Images");
             if (!Directory.Exists(imagesDirectory))
@@ -364,7 +370,7 @@ namespace translator
             string destImagePath = Path.Combine(imagesDirectory, imageFileName);
             File.Copy(imagePath, destImagePath, true);
 
-            string contentFilePath = FindFirstFileWithExtension(folderPath,".opf");
+            string contentFilePath = FindFirstFileWithExtension(folderPath, ".opf");
             UpdateContentFile(contentFilePath, imageFileName);
         }
         void UpdateContentFile(string contentFilePath, string imageFileName)
@@ -404,6 +410,30 @@ namespace translator
                 Console.WriteLine("An error occurred: " + ex.Message);
                 return null;
             }
+        }
+        Screen prewScreen;
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            Screen screen = (comboBox2.SelectedItem != null) ? (comboBox2.SelectedItem as ItemDisplay<Screen>).GetTValue() : null;
+            if (screen == null)
+                return;
+            if(prewScreen != null)
+                DeactivateScreens(prewScreen, Controls);
+            ActivateScreen(screen, Controls);
+            
+            prewScreen = screen;
+            InitializeComponent();
+        }
+
+        void DeactivateScreens(Screen screen, Control.ControlCollection control)
+        {
+            screen.ClearScrean(control);
+        }
+
+        void ActivateScreen(Screen screen, Control.ControlCollection control)
+        {
+            screen.DrawScrean(control);
         }
     }
 }

@@ -17,9 +17,9 @@ namespace translator
             m_displayText = displayCountry;
         }
 
-        public string GetCountryCode()
+        public TValue GetTValue()
         {
-            return typeof(TValue) == typeof(string) ? countryCode.ToString() : null;
+            return countryCode;
         }
         public override string ToString()
         {
