@@ -54,11 +54,21 @@ namespace translator
             comboBox1.SelectedItem = comboBox1.Items[0];
 
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Screen(0, new List<Control>()), "Non"));
-            comboBox2.Items.Add(new ItemDisplay<Epub>(new Epub(1, new List<Control> ()), ".epub"));
+            comboBox2.Items.Add(new ItemDisplay<Screen>(new Epub(1, new List<Control> (), this), ".epub"));
+
             comboBox2.SelectedItem = comboBox2.Items[1];
         }
 
-        
+        public Control GetControlByName(string name)
+        {
+            foreach (Control control in Controls)
+            {
+                if (control.Name == name)
+                    return control;
+            }
+            return null;
+        }
+
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             Screen screen = (comboBox2.SelectedItem != null) ? (comboBox2.SelectedItem as ItemDisplay<Screen>).GetTValue() : null;

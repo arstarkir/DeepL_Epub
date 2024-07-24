@@ -12,15 +12,18 @@ namespace translator
     {
         int id;
         List<Control> toDraw;
+        Form1 form1;
 
-        public Screen(int id = 0, List<Control> toDraw = null)
+        public Screen(int id = 0, List<Control> toDraw = null, Form1 form1 = null)
         {
             this.id = id;
             this.toDraw = toDraw;
+            this.form1 = form1;
         }
 
-        public int getId() { return id; }
-        public List<Control> getToDraw() { return toDraw; }
+        public int GetId() { return id; }
+        public List<Control> GetToDraw() { return toDraw; }
+        public Form1 GetForm1() { return form1; }
 
         public void DrawScrean(Control.ControlCollection control)
         {

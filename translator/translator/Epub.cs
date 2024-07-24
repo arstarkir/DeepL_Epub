@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,18 @@ namespace translator
 {
     public partial class Epub : Screen
     {
-        public Epub(int id, List<Control> toDraw) : base(id, toDraw) { }
+
+        public Epub(int id, List<Control> toDraw, Form1 form1) : base(id, toDraw, form1) 
+        {
+            InitializeComponent();
+
+            toDraw.Add(button1);
+            toDraw.Add(button2);
+            toDraw.Add(button3);
+            toDraw.Add(checkedListBox1);
+            toDraw.Add(checkBox2);
+        }
+
 
         private TaskCompletionSource<bool> _buttonClickCompletion;
 
@@ -52,11 +64,16 @@ namespace translator
 
                         await WaitForButtonPressAsync();
 
-                        string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
+                        Form1 form1 = GetForm1();
+                        ComboBox comboBox1 = (ComboBox)form1.GetControlByName("comboBox1");
+                        ProgressBar progressBar1 = (ProgressBar)form1.GetControlByName("progressBar1");
+                        TextBox textBox1 = (TextBox)form1.GetControlByName("textBox1");
+                        CheckBox checkBox1 = (CheckBox)form1.GetControlByName("checkBox1");
 
+                        string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
                         List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath :
                             checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => titleToFileMap[title]).ToList();
-                        Controls.Add(progressBar1);
+                        GetForm1().Controls.Add(progressBar1);
                         progressBar1.Maximum = checkedFilePaths.Count;
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
@@ -114,7 +131,7 @@ namespace translator
                 JObject jsonResponse = JObject.Parse(correctedHtml);
                 string translatedXhtml = jsonResponse["translations"][0]["text"].ToString();
                 await File.WriteAllTextAsync(filePath, translatedXhtml, Encoding.UTF8);
-                progressBar1.PerformStep();
+                ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
             }
             catch (JsonException jsonEx)
             {
@@ -219,7 +236,8 @@ namespace translator
 
         private void RepackToEpub(string extractPath, string originalEpubFileName)
         {
-            string epubFilePath = Path.Combine(Path.GetDirectoryName(extractPath), originalEpubFileName + comboBox1.SelectedText + ".epub");
+            string epubFilePath = Path.Combine(Path.GetDirectoryName(extractPath), originalEpubFileName + 
+                ((ComboBox)GetForm1().GetControlByName("comboBox1")).SelectedText + ".epub");
 
             if (File.Exists(epubFilePath))
                 File.Delete(epubFilePath);

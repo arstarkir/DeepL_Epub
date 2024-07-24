@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            //InitializeComponentOfAllSubScreens
+
+
             label1 = new Label();
             label2 = new Label();
             textBox1 = new TextBox();
