@@ -1,17 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-using System.Globalization;
-using System.IO;
-using System.IO.Compression;
-using System;
-using System.Net.Http;
-using System.Text;
-using Newtonsoft.Json.Linq;  
-using System.Text.Json;         
-using HtmlAgilityPack;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
+﻿
 namespace translator
 {
     public partial class Form1 : Form

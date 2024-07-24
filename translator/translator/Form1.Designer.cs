@@ -1,4 +1,5 @@
-﻿namespace translator
+﻿
+namespace translator
 {
     partial class Form1
     {
