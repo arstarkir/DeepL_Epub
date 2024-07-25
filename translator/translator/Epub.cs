@@ -331,5 +331,11 @@ namespace translator
                 return null;
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            BookEditorForm bookEditorForm = new BookEditorForm();
+            bookEditorForm.Show();
+        }
     }
 }

@@ -59,13 +59,13 @@ namespace translator
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             Screen screen = (comboBox2.SelectedItem != null) ? (comboBox2.SelectedItem as ItemDisplay<Screen>).GetTValue() : null;
-            if (screen == null)
-                return;
             if (prewScreen != null)
                 DeactivateScreens(prewScreen);
-            ActivateScreen(screen);
             prewScreen = screen;
-            InitializeComponent();
+
+            if (screen == null)
+                return;
+            ActivateScreen(screen);
         }
 
         void DeactivateScreens(Screen screen)
