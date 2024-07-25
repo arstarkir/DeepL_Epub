@@ -72,10 +72,20 @@ namespace translator
                         progressBar1.Maximum = checkedFilePaths.Count;
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
-                            string result = await TranslateTextWithDeepL(textBox1.Text, checkedFilePath, countryCode
-                                , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate");
+                            string result = await TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
+                                , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document");
+
                             await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
                             CorrectHtmlFile(checkedFilePath);
+
+
+                            // This is a backup way of transleetion if File translation doesn't work
+                            // Needs to be re implemented
+
+                            //string result = await TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
+                            //    , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/document");
+                            //await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
+                            //CorrectHtmlFile(checkedFilePath);
                         }
                         Controls.Remove(progressBar1);
                         RepackToEpub(extractPath, Path.GetFileNameWithoutExtension(filePath));
@@ -137,7 +147,47 @@ namespace translator
                 MessageBox.Show($"Failed to write to file: {ioEx.Message}", "File Writing Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        public static async Task<string> TranslateFileWithDeepL(string apiKey, string filePath, string targetLangCode, string apiUrl)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                try
+                {
+                    httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
 
+                    var form = new MultipartFormDataContent();
+                    form.Add(new StringContent(targetLangCode), "target_lang");
+
+                    // Read the file and add it to the multipart form
+                    using (var fileStream = File.OpenRead(filePath))
+                    {
+                        var fileContent = new StreamContent(fileStream);
+                        fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                        form.Add(fileContent, "file", Path.GetFileName(filePath));
+                    }
+
+                    HttpResponseMessage response = await httpClient.PostAsync(apiUrl, form);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = await response.Content.ReadAsStringAsync();
+                        return jsonResponse;
+                    }
+                    else
+                    {
+                        return $"API Request failed: {response.StatusCode}";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return $"Error sending request: {ex.Message}";
+                }
+            }
+        }
+
+
+        // This is a backup way of transleetion if File translation doesn't work
+        // Needs to be re implemented
         public static async Task<string> TranslateTextWithDeepL(string apiKey, string filePath, string targetLangCode, string apiUrl)
         {
             string textToTranslate;

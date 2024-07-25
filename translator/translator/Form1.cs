@@ -53,6 +53,8 @@ namespace translator
                 if (control.Name == name)
                     return control;
             }
+            if(name == "progressBar1")
+                return progressBar1;
             return null;
         }
 

@@ -124,6 +124,8 @@ namespace translator
             Controls.Add(textBox1);
             Controls.Add(comboBox1);
             Controls.Add(label1);
+            Controls.Add(progressBar1);
+            Controls.Remove(progressBar1);
 
             Name = "Form1";
             Text = "DeepL_Epub";
