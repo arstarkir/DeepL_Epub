@@ -9,7 +9,6 @@ namespace translator
 {
     public partial class Epub : Screen
     {
-
         public Epub(int id, List<Control> toDraw, Form1 form1) : base(id, toDraw, form1)
         {
             InitializeComponent();
@@ -20,7 +19,6 @@ namespace translator
             toDraw.Add(checkedListBox1);
             toDraw.Add(checkBox2);
         }
-
 
         private TaskCompletionSource<bool> _buttonClickCompletion;
 
@@ -74,119 +72,14 @@ namespace translator
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
 
-                            string result = await TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
+                            string result = await FileTranslation.TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
                                 , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document");
 
                             await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
-                            CorrectHtmlFile(checkedFilePath);
                         }
                         Controls.Remove(progressBar1);
                         RepackToEpub(extractPath, Path.GetFileNameWithoutExtension(filePath));
                     }
-                }
-            }
-        }
-
-        public static async Task<string> TranslateFileWithDeepL(string apiKey, string filePath, string targetLangCode, string apiUrl)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
-
-                var content = new MultipartFormDataContent();
-                content.Add(new StringContent(targetLangCode), "target_lang");
-
-                var fileStream = File.OpenRead(filePath);
-                var fileContent = new StreamContent(fileStream);
-                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-                content.Add(fileContent, "file", Path.GetFileName(filePath));
-
-                try
-                {
-                    HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return await WaitForFileTranslationCompletion(await response.Content.ReadAsStringAsync(), apiKey, apiUrl);
-                    }
-                    else
-                    {
-                        return $"API Request failed: {response.StatusCode} - {response.ReasonPhrase}";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return $"Error sending request: {ex.Message}";
-                }
-                finally
-                {
-                    fileStream.Close();
-                }
-            }
-        }
-        public static async Task<string> WaitForFileTranslationCompletion(string resultOfTranslateFileWithDeepL, string apiKey, string apiUrl)
-        {
-            var responseObj = JObject.Parse(resultOfTranslateFileWithDeepL);
-
-            string documentId = (string)responseObj["document_id"];
-            string documentKey = (string)responseObj["document_key"];
-
-
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
-
-                var content = new FormUrlEncodedContent(new[]
-                {
-            new KeyValuePair<string, string>("document_key", documentKey)
-        });
-
-                TimeSpan pollingInterval = TimeSpan.FromSeconds(2);
-                while (true)
-                {
-                    HttpResponseMessage response = await httpClient.PostAsync(apiUrl + "/" + documentId, content);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string result = await response.Content.ReadAsStringAsync();
-                        var status = JsonConvert.DeserializeObject<dynamic>(result);
-                        if (status.status == "done")
-                        {
-                            return await GetFileTranslation(resultOfTranslateFileWithDeepL, apiKey, apiUrl);
-                        }
-                    }
-                    else
-                    {
-                        return $"API Request failed: {response.StatusCode} - {response.ReasonPhrase}";
-                    }
-                    await Task.Delay(pollingInterval);
-                }
-            }
-        }
-
-        public static async Task<string> GetFileTranslation(string resultOfTranslateFileWithDeepL, string apiKey, string apiUrl)
-        {
-            var responseObj = JObject.Parse(resultOfTranslateFileWithDeepL);
-
-            string documentId = (string)responseObj["document_id"];
-            string documentKey = (string)responseObj["document_key"];
-
-
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
-
-                var content = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("document_key", documentKey)
-                });
-
-                HttpResponseMessage response = await httpClient.PostAsync(apiUrl + "/" + documentId + "/result", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadAsStringAsync();
-                }
-                else
-                {
-                    return $"API Request failed: {response.StatusCode} - {response.ReasonPhrase}";
                 }
             }
         }
@@ -226,11 +119,7 @@ namespace translator
         {
             try
             {
-                string pattern = @"<([\w/:.-]+)(?![^><]*>)(?=(?:[\r\n\""}\]]|$))";
-                string correctedHtml = Regex.Replace(jsonResult, pattern, m => $"<{m.Groups[1].Value}>");
-                pattern = @"(</\w+>)(\r\n)?(<\w>)";
-                correctedHtml = Regex.Replace(correctedHtml, pattern, m => { return m.Groups[2].Success ? m.Value : $"{m.Groups[1].Value}\r\n{m.Groups[3].Value}"; });
-                JObject jsonResponse = JObject.Parse(correctedHtml);
+                JObject jsonResponse = JObject.Parse(jsonResult);
                 string translatedXhtml = jsonResponse["translations"][0]["text"].ToString();
                 await File.WriteAllTextAsync(filePath, translatedXhtml, Encoding.UTF8);
                 ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
@@ -324,106 +213,15 @@ namespace translator
             MessageBox.Show($"EPUB repacked and saved as: {epubFilePath}", "Repack Successful", MessageBoxButtons.OK);
         }
 
-        public static void CorrectHtmlFile(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                Console.WriteLine("File does not exist: " + filePath);
-                return;
-            }
-
-            try
-            {
-                var doc = new HtmlAgilityPack.HtmlDocument
-                {
-                    OptionOutputAsXml = true
-                };
-
-                //doc.Load(filePath);
-
-                ////var nodes = doc.DocumentNode.Descendants().ToList();
-                ////for (int i = 0; i < nodes.Count; i++)
-                ////{
-                ////    var node = nodes[i];
-                ////    if (node.NodeType == HtmlNodeType.Element)
-                ////    {
-                ////        if (node.OuterHtml.EndsWith("<"))
-                ////        {
-                ////            node.InnerHtml += ">";
-                ////        }
-                ////    }
-                ////}
-
-                //doc.Save(filePath);
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
-            }
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             _buttonClickCompletion?.TrySetResult(true);
-        }
-
-        public static string FindFirstFileWithExtension(string directoryPath, string extension)
-        {
-            try
-            {
-                if (!Directory.Exists(directoryPath))
-                {
-                    Console.WriteLine("Directory does not exist.");
-                    return null;
-                }
-                var files = Directory.GetFiles(directoryPath, "*" + extension, SearchOption.AllDirectories);
-                if (files.Length > 0)
-                {
-                    return files[0];
-                }
-                else
-                {
-                    Console.WriteLine("No files with the specified extension were found.");
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
-                return null;
-            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             BookEditorForm bookEditorForm = new BookEditorForm();
             bookEditorForm.Show();
-        }
-
-        // Temp
-        private async void button4_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "C:\\";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.Multiselect = true;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    Form1 form1 = GetForm1();
-                    ComboBox comboBox1 = (ComboBox)form1.GetControlByName("comboBox1");
-                    ProgressBar progressBar1 = (ProgressBar)form1.GetControlByName("progressBar1");
-                    TextBox textBox1 = (TextBox)form1.GetControlByName("textBox1");
-                    CheckBox checkBox1 = (CheckBox)form1.GetControlByName("checkBox1");
-
-                    string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
-                    string apiUrl = (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document";
-                    string result = await TranslateFileWithDeepL(textBox1.Text, openFileDialog.FileName, countryCode, apiUrl);
-                }
-            }
         }
     }
 }

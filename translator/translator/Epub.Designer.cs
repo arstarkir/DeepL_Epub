@@ -69,7 +69,7 @@ namespace translator
             button3.TabIndex = 11;
             button3.Text = "BK";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += button4_Click;
+            button3.Click += button3_Click;
         }
 
         private System.Windows.Forms.Button button1;
