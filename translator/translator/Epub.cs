@@ -106,7 +106,7 @@ namespace translator
                     HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
                     if (response.IsSuccessStatusCode)
                     {
-                        return await response.Content.ReadAsStringAsync();
+                        return await WaitForFileTranslationCompletion(await response.Content.ReadAsStringAsync(), apiKey, apiUrl);
                     }
                     else
                     {
@@ -120,6 +120,45 @@ namespace translator
                 finally
                 {
                     fileStream.Close();
+                }
+            }
+        }
+        public static async Task<string> WaitForFileTranslationCompletion(string resultOfTranslateFileWithDeepL,string apiKey, string apiUrl)
+        {
+            var responseObj = JObject.Parse(resultOfTranslateFileWithDeepL);
+
+            string documentId = (string)responseObj["document_id"];
+            string documentKey = (string)responseObj["document_key"];
+
+     
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
+
+                var content = new FormUrlEncodedContent(new[]
+                {
+            new KeyValuePair<string, string>("document_key", documentKey)
+        });
+
+                TimeSpan pollingInterval = TimeSpan.FromSeconds(3);
+                while (true)
+                {
+                    HttpResponseMessage response = await httpClient.PostAsync(apiUrl + "/" + documentId, content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string result = await response.Content.ReadAsStringAsync();
+                        var status = JsonConvert.DeserializeObject<dynamic>(result);
+                        if (status.status == "done")
+                        {
+
+                            return status;
+                        }
+                    }
+                    else
+                    {
+                        return $"API Request failed: {response.StatusCode} - {response.ReasonPhrase}";
+                    }
+                    await Task.Delay(pollingInterval);
                 }
             }
         }
@@ -353,9 +392,8 @@ namespace translator
                     CheckBox checkBox1 = (CheckBox)form1.GetControlByName("checkBox1");
 
                     string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
-
-                    string result = await TranslateFileWithDeepL(textBox1.Text, openFileDialog.FileName, countryCode
-                               , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document");
+                    string apiUrl = (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document";
+                    string result = await TranslateFileWithDeepL(textBox1.Text, openFileDialog.FileName, countryCode, apiUrl);
                 }
             }
         }
