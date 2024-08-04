@@ -41,6 +41,18 @@ public static class DeepLTranslation
     {
         using (HttpClient httpClient = new HttpClient())
         {
+            string originalExtension = Path.GetExtension(filePath).ToLower();
+            string newFilePath = filePath;
+
+            if (originalExtension == ".xhtml" || originalExtension == ".xml")
+            {
+                string directory = Path.GetDirectoryName(filePath);
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+                newFilePath = Path.Combine(directory, fileNameWithoutExtension + ".html");
+                File.Copy(filePath, newFilePath, true);
+                filePath = newFilePath;
+            }
+
             httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
 
             var content = new MultipartFormDataContent();
@@ -56,6 +68,10 @@ public static class DeepLTranslation
                 HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
                 if (response.IsSuccessStatusCode)
                 {
+                    if (filePath != newFilePath)
+                    {
+                        File.Delete(newFilePath);
+                    }
                     return await WaitForFileTranslationCompletion(await response.Content.ReadAsStringAsync(), apiKey, apiUrl);
                 }
                 else
@@ -70,6 +86,10 @@ public static class DeepLTranslation
             finally
             {
                 fileStream.Close();
+                if (filePath != newFilePath)
+                {
+                    File.Delete(newFilePath);
+                }
             }
         }
     }

@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using System.IO.Compression;
 using System.Text;
-using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace translator
@@ -69,21 +68,69 @@ namespace translator
                         List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath :
                             checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => titleToFileMap[title]).ToList();
                         GetForm1().Controls.Add(progressBar1);
-                        progressBar1.Maximum = checkedFilePaths.Count + 3;
+                        progressBar1.Maximum = checkedFilePaths.Count*2 + 3;
 
-                        //await StartRepacking(countryCode, Path.GetFileNameWithoutExtension(filePath));
+                        await StartRepacking(countryCode, textBox1.Text, 
+                            (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate", openFileDialog.FileName);
 
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
                             string result = await DeepLTranslation.TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
                                 , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document");
+                            ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
 
-                            await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
+                            await CreateChapterAndPutTransitionIn(checkedFilePath, result, textBox1.Text
+                                , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate", countryCode);
+                            ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
                         }
                         Controls.Remove(progressBar1);
                         RepackToEpub(extractPath, Path.GetFileNameWithoutExtension(filePath));
                     }
                 }
+            }
+        }
+
+        public async Task CreateChapterAndPutTransitionIn(string filePath, string textToWrite, string apiKey, string apiUrl, string countryCode)
+        {
+            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty", "OEBPS", "Text");
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            
+            JObject jsonResponse = JObject.Parse(await DeepLTranslation.TranslateTextWithDeepL(apiKey, apiUrl, countryCode, fileName));
+            fileName = jsonResponse["translations"][0]["text"].ToString();
+            string newFilePath = Path.Combine(directoryPath, $"{fileName}{Path.GetExtension(filePath)}");
+
+            File.Create(newFilePath);
+            File.WriteAllText(newFilePath, textToWrite, Encoding.UTF8);
+
+            AddChapterToOpf(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty", "OEBPS", "content.opf"), $"{fileName}{Path.GetExtension(filePath)}");
+        }
+
+        public static void AddChapterToOpf(string opfFilePath, string chapterFileName)
+        {
+            try
+            {
+                XDocument opfDocument = XDocument.Load(opfFilePath);
+                XNamespace opf = "http://www.idpf.org/2007/opf";
+                XElement manifest = opfDocument.Root.Element(opf + "manifest");
+                XElement spine = opfDocument.Root.Element(opf + "spine");
+
+                string itemId = $"id{Guid.NewGuid().ToString("N")}";
+
+                XElement newItem = new XElement(opf + "item",
+                    new XAttribute("id", itemId),
+                    new XAttribute("href", $"Text/{chapterFileName}"),
+                    new XAttribute("media-type", "application/xhtml+xml"));
+                manifest.Add(newItem);
+
+                XElement itemRef = new XElement(opf + "itemref", new XAttribute("idref", itemId));
+                spine.Add(itemRef);
+
+                opfDocument.Save(opfFilePath);
+                Console.WriteLine("Chapter added successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating OPF file: {ex.Message}");
             }
         }
 
@@ -107,11 +154,16 @@ namespace translator
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
+
             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
+
             string result = await DeepLTranslation.TranslateTextWithDeepL(apiKey, apiUrl, countryCode, Path.GetFileNameWithoutExtension(originalFilePath));
             JObject jsonResponse = JObject.Parse(result);
             string translatedTitle = jsonResponse["translations"][0]["text"].ToString();
             translatedTitle = translatedTitle + "_"+ countryCode;
+
+            ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
+
             await UpdateOpfFile(destinationPath, countryCode, translatedTitle);
         }
 
@@ -162,6 +214,7 @@ namespace translator
                 Console.WriteLine("Error updating OPF file: " + ex.Message);
             }
 
+            ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
         }
         private static void CopyAllFiles(string sourceDirectory, string targetDirectory)
         {
@@ -207,25 +260,6 @@ namespace translator
         {
             _buttonClickCompletion = new TaskCompletionSource<bool>();
             return _buttonClickCompletion.Task;
-        }
-
-        public async Task UpdateXhtmlFileWithTranslation(string filePath, string jsonResult)
-        {
-            try
-            {
-                JObject jsonResponse = JObject.Parse(jsonResult);
-                string translatedXhtml = jsonResponse["translations"][0]["text"].ToString();
-                await File.WriteAllTextAsync(filePath, translatedXhtml, Encoding.UTF8);
-                ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
-            }
-            catch (JsonException jsonEx)
-            {
-                MessageBox.Show($"Failed to parse JSON response: {jsonEx.Message}", "JSON Parsing Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (IOException ioEx)
-            {
-                MessageBox.Show($"Failed to write to file: {ioEx.Message}", "File Writing Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         public List<string> FindTextFilesInDirectory(string directoryPath)
@@ -316,32 +350,6 @@ namespace translator
         {
             BookEditorForm bookEditorForm = new BookEditorForm();
             bookEditorForm.Show();
-        }
-
-        // Temp
-        private async void button4_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "C:\\";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.Multiselect = true;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    Form1 form1 = GetForm1();
-                    ComboBox comboBox1 = (ComboBox)form1.GetControlByName("comboBox1");
-                    ProgressBar progressBar1 = (ProgressBar)form1.GetControlByName("progressBar1");
-                    TextBox textBox1 = (TextBox)form1.GetControlByName("textBox1");
-                    CheckBox checkBox1 = (CheckBox)form1.GetControlByName("checkBox1");
-
-                    string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
-
-                    await StartRepacking(countryCode, textBox1.Text, (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate",
-                        openFileDialog.FileName);
-                }
-            }
         }
     }
 }
