@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Linq;
 using System.IO.Compression;
 using System.Text;
+using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace translator
 {
@@ -69,11 +71,11 @@ namespace translator
                         GetForm1().Controls.Add(progressBar1);
                         progressBar1.Maximum = checkedFilePaths.Count + 3;
 
-                        //await StartRepacking();
+                        //await StartRepacking(countryCode, Path.GetFileNameWithoutExtension(filePath));
 
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
-                            string result = await FileTranslation.TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
+                            string result = await DeepLTranslation.TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
                                 , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document");
 
                             await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
@@ -85,7 +87,7 @@ namespace translator
             }
         }
 
-        public async Task StartRepacking()
+        public async Task StartRepacking(string countryCode, string apiKey, string apiUrl, string originalFilePath)
         {
             string sourcePath = Path.Combine(Directory.GetCurrentDirectory(), "Empty");
             string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty");
@@ -106,8 +108,61 @@ namespace translator
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
+            string result = await DeepLTranslation.TranslateTextWithDeepL(apiKey, apiUrl, countryCode, Path.GetFileNameWithoutExtension(originalFilePath));
+            JObject jsonResponse = JObject.Parse(result);
+            string translatedTitle = jsonResponse["translations"][0]["text"].ToString();
+            translatedTitle = translatedTitle + "_"+ countryCode;
+            await UpdateOpfFile(destinationPath, countryCode, translatedTitle);
         }
 
+        public async Task UpdateOpfFile(string destinationPath, string lang, string title)
+        {
+            string opfFilePath = Path.Combine(destinationPath, "OEBPS", "content.opf");
+            if (!File.Exists(opfFilePath))
+            {
+                Console.WriteLine("File does not exist.");
+                return;
+            }
+
+            try
+            {
+                XDocument opfDocument = XDocument.Load(opfFilePath);
+
+                XNamespace dc = "http://purl.org/dc/elements/1.1/";
+                XNamespace opf = "http://www.idpf.org/2007/opf";
+                XNamespace pkg = "http://www.idpf.org/2007/opf";
+
+                XElement metadataElement = opfDocument.Root.Element(pkg + "metadata");
+                if (metadataElement != null)
+                {
+                    metadataElement.Element(dc + "language").Value = lang;
+                    metadataElement.Element(dc + "title").Value = title;
+
+                    XElement metaElement = new XElement(pkg + "meta",
+                        new XAttribute("name", "Sigil version"),
+                        new XAttribute("content", "2.2.1"));
+                    metadataElement.Add(metaElement);
+
+                    XElement dateElement = new XElement(dc + "date",
+                        new XAttribute(opf + "event", "modification"),
+                        "2024-08-04");
+                    metadataElement.Add(dateElement);
+
+                    opfDocument.Save(opfFilePath);
+
+                    Console.WriteLine("OPF file updated successfully.");
+                }
+                else
+                {
+                    Console.WriteLine("Metadata element not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating OPF file: " + ex.Message);
+            }
+
+        }
         private static void CopyAllFiles(string sourceDirectory, string targetDirectory)
         {
             Directory.CreateDirectory(targetDirectory);
@@ -266,7 +321,27 @@ namespace translator
         // Temp
         private async void button4_Click(object sender, EventArgs e)
         {
-            await StartRepacking();
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "C:\\";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.Multiselect = true;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Form1 form1 = GetForm1();
+                    ComboBox comboBox1 = (ComboBox)form1.GetControlByName("comboBox1");
+                    ProgressBar progressBar1 = (ProgressBar)form1.GetControlByName("progressBar1");
+                    TextBox textBox1 = (TextBox)form1.GetControlByName("textBox1");
+                    CheckBox checkBox1 = (CheckBox)form1.GetControlByName("checkBox1");
+
+                    string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
+
+                    await StartRepacking(countryCode, textBox1.Text, (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate",
+                        openFileDialog.FileName);
+                }
+            }
         }
     }
 }

@@ -1,8 +1,42 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Text;
 
-public static class FileTranslation
+public static class DeepLTranslation
 {
+    public static async Task<string> TranslateTextWithDeepL(string apiKey, string apiUrl, string targetLangCode, string textToTranslate)
+    {
+        using (HttpClient httpClient = new HttpClient())
+        {
+            try
+            {
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
+
+                var content = new FormUrlEncodedContent(new[]
+                {
+                new KeyValuePair<string, string>("text", textToTranslate),
+                new KeyValuePair<string, string>("target_lang", targetLangCode)
+            });
+
+                HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    return jsonResponse;
+                }
+                else
+                {
+                    return $"API Request failed: {response.StatusCode}";
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"Error sending request: {ex.Message}";
+            }
+        }
+    }
+
     public static async Task<string> TranslateFileWithDeepL(string apiKey, string filePath, string targetLangCode, string apiUrl)
     {
         using (HttpClient httpClient = new HttpClient())
