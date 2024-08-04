@@ -10,7 +10,7 @@ namespace translator
     public partial class Epub : Screen
     {
 
-        public Epub(int id, List<Control> toDraw, Form1 form1) : base(id, toDraw, form1) 
+        public Epub(int id, List<Control> toDraw, Form1 form1) : base(id, toDraw, form1)
         {
             InitializeComponent();
 
@@ -73,8 +73,8 @@ namespace translator
                         progressBar1.Maximum = checkedFilePaths.Count;
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
-                            
-                            string result = await TranslateFileWithDeepLBase64(textBox1.Text, checkedFilePath, countryCode
+
+                            string result = await TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
                                 , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document");
 
                             await UpdateXhtmlFileWithTranslation(checkedFilePath, result);
@@ -87,29 +87,19 @@ namespace translator
             }
         }
 
-        public static async Task<string> TranslateFileWithDeepLBase64(string apiKey, string filePath, string targetLangCode, string apiUrl)
+        public static async Task<string> TranslateFileWithDeepL(string apiKey, string filePath, string targetLangCode, string apiUrl)
         {
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
 
-                string fileContentsBase64;
-                try
-                {
-                    byte[] fileBytes = File.ReadAllBytes(filePath);
-                    fileContentsBase64 = Convert.ToBase64String(fileBytes);
-                }
-                catch (IOException ex)
-                {
-                    return $"Error reading file: {ex.Message}";
-                }
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(targetLangCode), "target_lang");
 
-                var content = new FormUrlEncodedContent(new[]
-                {
-            new KeyValuePair<string, string>("file_base64", fileContentsBase64),
-            new KeyValuePair<string, string>("file_name", Path.GetFileName(filePath)),
-            new KeyValuePair<string, string>("target_lang", targetLangCode)
-        });
+                var fileStream = File.OpenRead(filePath);
+                var fileContent = new StreamContent(fileStream);
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                content.Add(fileContent, "file", Path.GetFileName(filePath));
 
                 try
                 {
@@ -127,9 +117,12 @@ namespace translator
                 {
                     return $"Error sending request: {ex.Message}";
                 }
+                finally
+                {
+                    fileStream.Close();
+                }
             }
         }
-
 
         public Dictionary<string, string> ExtractTitlesAndMapToFiles(List<string> filePaths)
         {
@@ -157,7 +150,7 @@ namespace translator
         }
 
         private Task WaitForButtonPressAsync()
-        {       
+        {
             _buttonClickCompletion = new TaskCompletionSource<bool>();
             return _buttonClickCompletion.Task;
         }
@@ -234,7 +227,7 @@ namespace translator
 
         private void RepackToEpub(string extractPath, string originalEpubFileName)
         {
-            string epubFilePath = Path.Combine(Path.GetDirectoryName(extractPath), originalEpubFileName + 
+            string epubFilePath = Path.Combine(Path.GetDirectoryName(extractPath), originalEpubFileName +
                 ((ComboBox)GetForm1().GetControlByName("comboBox1")).SelectedText + ".epub");
 
             if (File.Exists(epubFilePath))
@@ -307,7 +300,7 @@ namespace translator
         {
             _buttonClickCompletion?.TrySetResult(true);
         }
-       
+
         public static string FindFirstFileWithExtension(string directoryPath, string extension)
         {
             try
@@ -339,6 +332,32 @@ namespace translator
         {
             BookEditorForm bookEditorForm = new BookEditorForm();
             bookEditorForm.Show();
+        }
+
+        // Temp
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "C:\\";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.Multiselect = true;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    Form1 form1 = GetForm1();
+                    ComboBox comboBox1 = (ComboBox)form1.GetControlByName("comboBox1");
+                    ProgressBar progressBar1 = (ProgressBar)form1.GetControlByName("progressBar1");
+                    TextBox textBox1 = (TextBox)form1.GetControlByName("textBox1");
+                    CheckBox checkBox1 = (CheckBox)form1.GetControlByName("checkBox1");
+
+                    string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
+
+                    string result = await TranslateFileWithDeepL(textBox1.Text, openFileDialog.FileName, countryCode
+                               , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document");
+                }
+            }
         }
     }
 }
