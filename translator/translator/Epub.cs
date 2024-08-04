@@ -2,8 +2,6 @@
 using Newtonsoft.Json.Linq;
 using System.IO.Compression;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace translator
 {
@@ -18,6 +16,7 @@ namespace translator
             toDraw.Add(button3);
             toDraw.Add(checkedListBox1);
             toDraw.Add(checkBox2);
+
         }
 
         private TaskCompletionSource<bool> _buttonClickCompletion;
@@ -68,10 +67,12 @@ namespace translator
                         List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath :
                             checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => titleToFileMap[title]).ToList();
                         GetForm1().Controls.Add(progressBar1);
-                        progressBar1.Maximum = checkedFilePaths.Count;
+                        progressBar1.Maximum = checkedFilePaths.Count + 3;
+
+                        //await StartRepacking();
+
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
-
                             string result = await FileTranslation.TranslateFileWithDeepL(textBox1.Text, checkedFilePath, countryCode
                                 , (checkBox1.Checked) ? "https://api-free.deepl.com/v2/document" : "https://api.deepl.com/v2/document");
 
@@ -83,7 +84,45 @@ namespace translator
                 }
             }
         }
-    
+
+        public async Task StartRepacking()
+        {
+            string sourcePath = Path.Combine(Directory.GetCurrentDirectory(), "Empty");
+            string destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty");
+
+            try
+            {
+                if (Directory.Exists(sourcePath))
+                {
+                    CopyAllFiles(sourcePath, destinationPath);
+                }
+                else
+                {
+                    Console.WriteLine("Source directory does not exist or has already been moved.");
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+            ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
+        }
+
+        private static void CopyAllFiles(string sourceDirectory, string targetDirectory)
+        {
+            Directory.CreateDirectory(targetDirectory);
+
+            foreach (var file in Directory.GetFiles(sourceDirectory))
+            {
+                File.Copy(file, Path.Combine(targetDirectory, Path.GetFileName(file)));
+            }
+
+            foreach (var directory in Directory.GetDirectories(sourceDirectory))
+            {
+                CopyAllFiles(directory, Path.Combine(targetDirectory, Path.GetFileName(directory)));
+            }
+        }
+
         public Dictionary<string, string> ExtractTitlesAndMapToFiles(List<string> filePaths)
         {
             Dictionary<string, string> titleToFileMap = new Dictionary<string, string>();
@@ -222,6 +261,12 @@ namespace translator
         {
             BookEditorForm bookEditorForm = new BookEditorForm();
             bookEditorForm.Show();
+        }
+
+        // Temp
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            await StartRepacking();
         }
     }
 }

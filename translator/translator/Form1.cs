@@ -42,8 +42,30 @@ namespace translator
 
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Screen(0, new List<Control>()), "Non"));
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Epub(1, new List<Control> (), this), ".epub"));
-
             comboBox2.SelectedItem = comboBox2.Items[1];
+
+            Application.ApplicationExit += new EventHandler(OnApplicationExit);
+            this.FormClosing += new FormClosingEventHandler(OnApplicationExit);
+        }
+
+        private void OnApplicationExit(object sender, EventArgs e)
+        {
+            CleanRepackingFolder();
+        }
+
+        private void CleanRepackingFolder()
+        {
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder");
+
+            foreach (string file in Directory.GetFiles(folderPath))
+            {
+                File.Delete(file);
+            }
+
+            foreach (string dir in Directory.GetDirectories(folderPath))
+            {
+                Directory.Delete(dir, true);
+            }
         }
 
         public Control GetControlByName(string name)
