@@ -123,14 +123,14 @@ namespace translator
                 }
             }
         }
-        public static async Task<string> WaitForFileTranslationCompletion(string resultOfTranslateFileWithDeepL,string apiKey, string apiUrl)
+        public static async Task<string> WaitForFileTranslationCompletion(string resultOfTranslateFileWithDeepL, string apiKey, string apiUrl)
         {
             var responseObj = JObject.Parse(resultOfTranslateFileWithDeepL);
 
             string documentId = (string)responseObj["document_id"];
             string documentKey = (string)responseObj["document_key"];
 
-     
+
             using (HttpClient httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
@@ -140,7 +140,7 @@ namespace translator
             new KeyValuePair<string, string>("document_key", documentKey)
         });
 
-                TimeSpan pollingInterval = TimeSpan.FromSeconds(3);
+                TimeSpan pollingInterval = TimeSpan.FromSeconds(2);
                 while (true)
                 {
                     HttpResponseMessage response = await httpClient.PostAsync(apiUrl + "/" + documentId, content);
@@ -150,8 +150,7 @@ namespace translator
                         var status = JsonConvert.DeserializeObject<dynamic>(result);
                         if (status.status == "done")
                         {
-
-                            return status;
+                            return await GetFileTranslation(resultOfTranslateFileWithDeepL, apiKey, apiUrl);
                         }
                     }
                     else
@@ -163,6 +162,35 @@ namespace translator
             }
         }
 
+        public static async Task<string> GetFileTranslation(string resultOfTranslateFileWithDeepL, string apiKey, string apiUrl)
+        {
+            var responseObj = JObject.Parse(resultOfTranslateFileWithDeepL);
+
+            string documentId = (string)responseObj["document_id"];
+            string documentKey = (string)responseObj["document_key"];
+
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
+
+                var content = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("document_key", documentKey)
+                });
+
+                HttpResponseMessage response = await httpClient.PostAsync(apiUrl + "/" + documentId + "/result", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    return $"API Request failed: {response.StatusCode} - {response.ReasonPhrase}";
+                }
+            }
+        }
+    
         public Dictionary<string, string> ExtractTitlesAndMapToFiles(List<string> filePaths)
         {
             Dictionary<string, string> titleToFileMap = new Dictionary<string, string>();
