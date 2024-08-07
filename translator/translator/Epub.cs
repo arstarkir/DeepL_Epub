@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.IO;
 using System.IO.Compression;
 using System.Text;
 using System.Xml.Linq;
@@ -84,7 +85,7 @@ namespace translator
                             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
                         }
                         Controls.Remove(progressBar1);
-                        RepackToEpub(extractPath, Path.GetFileNameWithoutExtension(filePath));
+                        RepackToEpub(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty"), Path.GetFileNameWithoutExtension(filePath) +"_"+ countryCode);
                     }
                 }
             }
@@ -93,16 +94,10 @@ namespace translator
         public async Task CreateChapterAndPutTransitionIn(string filePath, string textToWrite, string apiKey, string apiUrl, string countryCode)
         {
             string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty", "OEBPS", "Text");
-            string fileName = Path.GetFileNameWithoutExtension(filePath);
-            
-            JObject jsonResponse = JObject.Parse(await DeepLTranslation.TranslateTextWithDeepL(apiKey, apiUrl, countryCode, fileName));
-            fileName = jsonResponse["translations"][0]["text"].ToString();
-            string newFilePath = Path.Combine(directoryPath, $"{fileName}{Path.GetExtension(filePath)}");
-
-            File.Create(newFilePath);
+            string newFilePath = Path.Combine(directoryPath, $"{Path.GetFileName(filePath)}");
             File.WriteAllText(newFilePath, textToWrite, Encoding.UTF8);
 
-            AddChapterToOpf(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty", "OEBPS", "content.opf"), $"{fileName}{Path.GetExtension(filePath)}");
+            AddChapterToOpf(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty", "OEBPS", "content.opf"), $"{Path.GetFileName(newFilePath)}");
         }
 
         public static void AddChapterToOpf(string opfFilePath, string chapterFileName)
