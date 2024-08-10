@@ -18,7 +18,6 @@ namespace translator
             toDraw.Add(button3);
             toDraw.Add(checkedListBox1);
             toDraw.Add(checkBox2);
-
         }
 
         private TaskCompletionSource<bool> _buttonClickCompletion;
