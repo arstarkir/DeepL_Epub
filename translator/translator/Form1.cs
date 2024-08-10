@@ -43,7 +43,8 @@ namespace translator
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Screen(0, new List<Control>()), "Non"));
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Epub(1, new List<Control>(), this), ".epub"));
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Text(1, new List<Control>(), this), "Text"));
-            comboBox2.SelectedItem = comboBox2.Items[1];
+            comboBox2.Items.Add(new ItemDisplay<Screen>(new Text(1, new List<Control>(), this), "Web Files (.html/.xhtml/.htm/.xhtm)"));
+            comboBox2.SelectedItem = comboBox2.Items[0];
 
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
             this.FormClosing += new FormClosingEventHandler(OnApplicationExit);
