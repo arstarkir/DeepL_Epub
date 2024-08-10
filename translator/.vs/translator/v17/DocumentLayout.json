@@ -54,8 +54,7 @@
               "RelativeToolTip": "translator\\Text.Designer.cs",
               "ViewState": "AQIAABgAAAAAAAAAAAAowCUAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-10T11:26:34.844Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-10T11:26:34.844Z"
             },
             {
               "$type": "Document",
@@ -65,7 +64,7 @@
               "RelativeDocumentMoniker": "translator\\Text.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Text.cs",
               "RelativeToolTip": "translator\\Text.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAgwA4AAAAiAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAgwBsAAABbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-10T11:21:04.382Z",
               "EditorCaption": ""
@@ -80,8 +79,7 @@
               "RelativeToolTip": "translator\\DeepLTranslation.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-04T15:40:51.547Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-04T15:40:51.547Z"
             },
             {
               "$type": "Document",
@@ -91,7 +89,7 @@
               "RelativeDocumentMoniker": "translator\\Epub.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Epub.cs",
               "RelativeToolTip": "translator\\Epub.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAgwBgAAAAVAAAA",
+              "ViewState": "AQIAAIUAAAAAAAAAAAAcwJsAAABYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-25T12:00:28.292Z",
               "EditorCaption": ""
@@ -106,8 +104,7 @@
               "RelativeToolTip": "translator\\Epub.Designer.cs",
               "ViewState": "AQIAADkAAAAAAAAAAAAowEkAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T19:37:32.186Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-23T19:37:32.186Z"
             },
             {
               "$type": "Document",
@@ -119,8 +116,7 @@
               "RelativeToolTip": "translator\\Form1.Designer.cs",
               "ViewState": "AQIAABYAAAAAAAAAAAAgwCcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-23T11:37:36.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-23T11:37:36.999Z"
             },
             {
               "$type": "Document",
@@ -131,8 +127,7 @@
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs [Design]",
               "RelativeToolTip": "translator\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T19:54:45.925Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-07-23T19:54:45.925Z"
             },
             {
               "$type": "Document",
@@ -144,8 +139,7 @@
               "RelativeToolTip": "translator\\Form1.cs",
               "ViewState": "AQIAAEkAAAAAAAAAAAAowCwAAABpAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-23T11:19:53.269Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-23T11:19:53.269Z"
             }
           ]
         }
