@@ -42,3 +42,4 @@ C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\ref\translator.
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.Epub.resources
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.Screen.resources
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.BookEditorForm.resources
+C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.Text.resources

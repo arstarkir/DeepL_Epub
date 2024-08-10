@@ -37,10 +37,7 @@ namespace translator
             comboBox2 = new ComboBox();
             checkBox1 = new CheckBox();
             progressBar1 = new ProgressBar();
-            richTextBox3 = new RichTextBox();
-            richTextBox1 = new RichTextBox();
-            label4 = new Label();
-            button1 = new Button();
+
             SuspendLayout();
             // 
             // label1
@@ -111,52 +108,14 @@ namespace translator
             progressBar1.Size = new Size(551, 23);
             progressBar1.Step = 1;
             progressBar1.TabIndex = 9;
-            // 
-            // richTextBox3
-            // 
-            richTextBox3.Location = new Point(413, 89);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.Size = new Size(300, 300);
-            richTextBox3.TabIndex = 14;
-            richTextBox3.Text = "";
-            // 
-            // richTextBox1
-            // 
-            richTextBox1.Location = new Point(52, 89);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(300, 300);
-            richTextBox1.TabIndex = 13;
-            richTextBox1.Text = "";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 20F);
-            label4.Location = new Point(361, 210);
-            label4.Name = "label4";
-            label4.Size = new Size(46, 37);
-            label4.TabIndex = 15;
-            label4.Text = "->";
-            // 
-            // button1
-            // 
-            button1.Font = new Font("Segoe UI", 13F);
-            button1.Location = new Point(321, 395);
-            button1.Name = "button1";
-            button1.Size = new Size(111, 39);
-            button1.TabIndex = 16;
-            button1.Text = "Translate!";
-            button1.UseVisualStyleBackColor = true;
+
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(button1);
-            Controls.Add(label4);
-            Controls.Add(richTextBox3);
-            Controls.Add(richTextBox1);
+
             Controls.Add(label2);
             Controls.Add(comboBox2);
             Controls.Add(checkBox1);
@@ -179,10 +138,6 @@ namespace translator
         private ProgressBar progressBar1;
         private ComboBox comboBox2;
         private Label label2;
-        private RichTextBox richTextBox3;
-        private RichTextBox richTextBox1;
-        private Label label4;
-        private Button button1;
     }
 
 }
