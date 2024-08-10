@@ -29,9 +29,6 @@ namespace translator
         /// </summary>
         private void InitializeComponent()
         {
-            //InitializeComponentOfAllSubScreens
-
-
             label1 = new Label();
             label2 = new Label();
             textBox1 = new TextBox();
@@ -40,7 +37,9 @@ namespace translator
             comboBox2 = new ComboBox();
             checkBox1 = new CheckBox();
             progressBar1 = new ProgressBar();
-            
+            richTextBox3 = new RichTextBox();
+            richTextBox1 = new RichTextBox();
+            label4 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -51,6 +50,15 @@ namespace translator
             label1.Size = new Size(19, 15);
             label1.TabIndex = 1;
             label1.Text = "To";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 51);
+            label2.Name = "label2";
+            label2.Size = new Size(35, 15);
+            label2.TabIndex = 10;
+            label2.Text = "What";
             // 
             // textBox1
             // 
@@ -68,15 +76,13 @@ namespace translator
             label3.TabIndex = 3;
             label3.Text = "API KEY";
             // 
-            // checkBox1
+            // comboBox1
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(172, 9);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(70, 19);
-            checkBox1.TabIndex = 7;
-            checkBox1.Text = "Free Key";
-            checkBox1.UseVisualStyleBackColor = true;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(216, 43);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 23);
+            comboBox1.TabIndex = 0;
             // 
             // comboBox2
             // 
@@ -87,14 +93,15 @@ namespace translator
             comboBox2.TabIndex = 9;
             comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
             // 
-            // label2
+            // checkBox1
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 51);
-            label2.Name = "label2";
-            label2.Size = new Size(35, 15);
-            label2.TabIndex = 10;
-            label2.Text = "What";
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(172, 9);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(70, 19);
+            checkBox1.TabIndex = 7;
+            checkBox1.Text = "Free Key";
+            checkBox1.UseVisualStyleBackColor = true;
             // 
             // progressBar1
             // 
@@ -104,19 +111,39 @@ namespace translator
             progressBar1.Step = 1;
             progressBar1.TabIndex = 9;
             // 
-            // comboBox1
+            // richTextBox3
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(216, 43);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 0;
+            richTextBox3.Location = new Point(413, 89);
+            richTextBox3.Name = "richTextBox3";
+            richTextBox3.Size = new Size(300, 300);
+            richTextBox3.TabIndex = 14;
+            richTextBox3.Text = "";
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new Point(52, 89);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(300, 300);
+            richTextBox1.TabIndex = 13;
+            richTextBox1.Text = "";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(379, 222);
+            label4.Name = "label4";
+            label4.Size = new Size(19, 15);
+            label4.TabIndex = 15;
+            label4.Text = "->";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label4);
+            Controls.Add(richTextBox3);
+            Controls.Add(richTextBox1);
             Controls.Add(label2);
             Controls.Add(comboBox2);
             Controls.Add(checkBox1);
@@ -124,9 +151,6 @@ namespace translator
             Controls.Add(textBox1);
             Controls.Add(comboBox1);
             Controls.Add(label1);
-            Controls.Add(progressBar1);
-            Controls.Remove(progressBar1);
-
             Name = "Form1";
             Text = "DeepL_Epub";
             ResumeLayout(false);
@@ -142,6 +166,9 @@ namespace translator
         private ProgressBar progressBar1;
         private ComboBox comboBox2;
         private Label label2;
+        private RichTextBox richTextBox3;
+        private RichTextBox richTextBox1;
+        private Label label4;
     }
 
 }

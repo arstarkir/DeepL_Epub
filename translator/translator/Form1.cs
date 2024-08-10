@@ -41,7 +41,7 @@ namespace translator
             comboBox1.SelectedItem = comboBox1.Items[0];
 
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Screen(0, new List<Control>()), "Non"));
-            comboBox2.Items.Add(new ItemDisplay<Screen>(new Epub(1, new List<Control> (), this), ".epub"));
+            comboBox2.Items.Add(new ItemDisplay<Screen>(new Epub(1, new List<Control>(), this), ".epub"));
             comboBox2.SelectedItem = comboBox2.Items[1];
 
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
@@ -75,7 +75,7 @@ namespace translator
                 if (control.Name == name)
                     return control;
             }
-            if(name == "progressBar1")
+            if (name == "progressBar1")
                 return progressBar1;
             return null;
         }
