@@ -1,3 +1,5 @@
+# NOT UP TO DATE
+
 # DeepL_Epub
 
 [Eng] A Tool for people to translate .epub books easily!
@@ -20,7 +22,7 @@ This app bridges that gap, providing users with seamless integration to translat
 
 [![Made with WinForms](https://img.shields.io/badge/.NET-7.0-512BD4.svg?style=flat-square&logo=dot-net)](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 
-## How To Translate A Book [Tutorial] [Туторіал]
+## How To Translate A Book [Tutorial] [Туторіал] (USE OLD BULID FOR THIS) (ВИКОРИСТОВУЙТЕ СТАРУ ВЕРСІЮ)
 
 [Eng] Full Tutorial Gif
 
