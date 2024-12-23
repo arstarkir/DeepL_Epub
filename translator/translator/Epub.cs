@@ -68,9 +68,9 @@ namespace translator
                         List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath :
                             checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => titleToFileMap[title]).ToList();
                         GetForm1().Controls.Add(progressBar1);
-                        progressBar1.Maximum = checkedFilePaths.Count*2 + 3;
+                        progressBar1.Maximum = checkedFilePaths.Count * 2 + 3;
 
-                        await StartRepacking(countryCode, textBox1.Text, 
+                        await StartRepacking(countryCode, textBox1.Text,
                             (checkBox1.Checked) ? "https://api-free.deepl.com/v2/translate" : "https://api.deepl.com/v2/translate", openFileDialog.FileName);
 
                         foreach (var checkedFilePath in checkedFilePaths)
@@ -84,7 +84,7 @@ namespace translator
                             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
                         }
                         Controls.Remove(progressBar1);
-                        RepackToEpub(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty"), Path.GetFileNameWithoutExtension(filePath) +"_"+ countryCode);
+                        RepackToEpub(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty"), Path.GetFileNameWithoutExtension(filePath) + "_" + countryCode);
                     }
                 }
             }
@@ -94,9 +94,19 @@ namespace translator
         {
             string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty", "OEBPS", "Text");
             string newFilePath = Path.Combine(directoryPath, $"{Path.GetFileName(filePath)}");
+            if (!File.Exists(newFilePath))
+                ForceFileCreate(newFilePath);
             File.WriteAllText(newFilePath, textToWrite, Encoding.UTF8);
 
             AddChapterToOpf(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty", "OEBPS", "content.opf"), $"{Path.GetFileName(newFilePath)}");
+        }
+
+        public void ForceFileCreate(string filePath)
+        {
+            string directory = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+            using (File.Create(filePath));
         }
 
         public static void AddChapterToOpf(string opfFilePath, string chapterFileName)
@@ -154,7 +164,7 @@ namespace translator
             string result = await DeepLTranslation.TranslateTextWithDeepL(apiKey, apiUrl, countryCode, Path.GetFileNameWithoutExtension(originalFilePath));
             JObject jsonResponse = JObject.Parse(result);
             string translatedTitle = jsonResponse["translations"][0]["text"].ToString();
-            translatedTitle = translatedTitle + "_"+ countryCode;
+            translatedTitle = translatedTitle + "_" + countryCode;
 
             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
 
