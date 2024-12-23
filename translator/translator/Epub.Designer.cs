@@ -16,6 +16,7 @@ namespace translator
         private void InitializeComponent()
         {
             checkBox2 = new System.Windows.Forms.CheckBox();
+            checkBox3 = new System.Windows.Forms.CheckBox();
             checkedListBox1 = new CheckedListBox();
             button1 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
@@ -53,12 +54,22 @@ namespace translator
             // checkBox2
             // 
             checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(568, 381 + 75);
+            checkBox2.Location = new Point(568 - 10, 381 + 75);
             checkBox2.Name = "checkBox2";
             checkBox2.Size = new Size(85, 29);
             checkBox2.TabIndex = 8;
             checkBox2.Text = "Full Book";
             checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            checkBox3.AutoSize = true;
+            checkBox3.Location = new Point(468-50-10, 381 + 75);
+            checkBox3.Name = "checkBox3";
+            checkBox3.Size = new Size(85, 29);
+            checkBox3.TabIndex = 8;
+            checkBox3.Text = "Change Cover";
+            checkBox3.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -75,6 +86,7 @@ namespace translator
         private CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.Button button3;
     }
 }

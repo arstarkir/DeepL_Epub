@@ -18,6 +18,7 @@ namespace translator
             toDraw.Add(button3);
             toDraw.Add(checkedListBox1);
             toDraw.Add(checkBox2);
+            toDraw.Add(checkBox3);
         }
 
         private TaskCompletionSource<bool> _buttonClickCompletion;
@@ -84,8 +85,32 @@ namespace translator
                             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
                         }
                         Controls.Remove(progressBar1);
+
+                        if (checkBox3.Checked)
+                            ChangeCover(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty", "OEBPS", "Images"));
                         RepackToEpub(Path.Combine(Directory.GetCurrentDirectory(), "RepackingFolder", "Empty"), Path.GetFileNameWithoutExtension(filePath) + "_" + countryCode);
                     }
+                }
+            }
+        }
+
+        public void ChangeCover(string filePath)
+        {
+            MessageBox.Show($"Sevect new cover. It must be .jpg file.", "Sevect New Cover", MessageBoxButtons.OK);
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "jpg files (*.jpg)|*.jpg|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.Multiselect = false;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (File.Exists(filePath + "\\cover.jpg"))
+                        File.Delete(filePath + "\\cover.jpg");
+                    File.Copy(openFileDialog.FileName, filePath + "\\cover.jpg");
                 }
             }
         }
