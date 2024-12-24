@@ -69,7 +69,7 @@ namespace translator
             checkBox3.Size = new Size(85, 29);
             checkBox3.TabIndex = 8;
             checkBox3.Text = "Change Cover";
-            checkBox3.UseVisualStyleBackColor = true;
+            checkBox3.UseVisualStyleBackColor = true; 
             // 
             // button3
             // 

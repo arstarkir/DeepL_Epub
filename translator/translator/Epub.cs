@@ -272,17 +272,20 @@ namespace translator
                 string title = titleNode != null ? titleNode.InnerText.Trim() : "No title found";
 
                 if (!titleToFileMap.ContainsKey(title))
-                {
                     titleToFileMap.Add(title, filePath);
-                }
+                else
+                    AlreadyContainsKey(titleToFileMap,title, filePath,1);
             }
-            if (filePaths.Count() > titleToFileMap.Count())
-            {
-                MessageBox.Show($"Title was not found! Emergency Full Book translation turned on", "HTML Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                checkBox2.Checked = true;
-                checkBox2.Enabled = false;
-            }
+
             return titleToFileMap;
+        }
+
+        public void AlreadyContainsKey(Dictionary<string, string> titleToFileMap, string title,string filePath, int num)
+        {
+            if (titleToFileMap.ContainsKey(title + num.ToString()))
+                AlreadyContainsKey(titleToFileMap, title, filePath, num+1);
+            else
+                titleToFileMap.Add(title + num.ToString(), filePath);
         }
 
         private Task WaitForButtonPressAsync()
