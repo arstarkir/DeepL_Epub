@@ -40,6 +40,7 @@ namespace translator
             checkedListBox1.Name = "checkedListBox1";
             checkedListBox1.Size = new Size(551, 292);
             checkedListBox1.TabIndex = 5;
+            checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
             // 
             // button2
             // 

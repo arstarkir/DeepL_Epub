@@ -1,8 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualBasic.Devices;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace translator
@@ -20,9 +23,8 @@ namespace translator
             toDraw.Add(checkBox2);
             toDraw.Add(checkBox3);
         }
-
+        public Dictionary<string, string> curTitleToFileMap;
         private TaskCompletionSource<bool> _buttonClickCompletion;
-
         private async void button1_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -45,14 +47,18 @@ namespace translator
                         File.Copy(filePath, newFilePath);
 
                         string extractPath = Path.Combine(workingDirectory, Path.GetFileNameWithoutExtension(filePath));
-                        Directory.CreateDirectory(extractPath);
-                        ZipFile.ExtractToDirectory(newFilePath, extractPath);
+                        if (!File.Exists(newFilePath))
+                        {
+                            Directory.CreateDirectory(extractPath);
+                            ZipFile.ExtractToDirectory(newFilePath, extractPath);
+                        }
+
 
                         List<string> textFolderPath = FindTextFilesInDirectory(extractPath);
-                        var titleToFileMap = ExtractTitlesAndMapToFiles(textFolderPath);
+                        curTitleToFileMap = ExtractTitlesAndMapToFiles(textFolderPath);
 
                         checkedListBox1.Items.Clear();
-                        foreach (var title in titleToFileMap.Keys)
+                        foreach (var title in curTitleToFileMap.Keys)
                         {
                             checkedListBox1.Items.Add(title);
                         }
@@ -67,7 +73,7 @@ namespace translator
 
                         string countryCode = (comboBox1.SelectedItem != null) ? (comboBox1.SelectedItem as ItemDisplay<string>).GetTValue() : null;
                         List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath :
-                            checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => titleToFileMap[title]).ToList();
+                            checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => curTitleToFileMap[title]).ToList();
                         GetForm1().Controls.Add(progressBar1);
                         progressBar1.Maximum = checkedFilePaths.Count * 2 + 3;
 
@@ -155,11 +161,10 @@ namespace translator
                 spine.Add(itemRef);
 
                 opfDocument.Save(opfFilePath);
-                Console.WriteLine("Chapter added successfully.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error updating OPF file: {ex.Message}");
+                MessageBox.Show($"Error updating OPF file: {ex.Message}", "Error!", MessageBoxButtons.OK);
             }
         }
 
@@ -171,17 +176,13 @@ namespace translator
             try
             {
                 if (Directory.Exists(sourcePath))
-                {
                     CopyAllFiles(sourcePath, destinationPath);
-                }
                 else
-                {
-                    Console.WriteLine("Source directory does not exist or has already been moved.");
-                }
+                    MessageBox.Show($"Source directory does not exist or has already been moved.", "Error!", MessageBoxButtons.OK);
             }
             catch (IOException ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                MessageBox.Show($"An error occurred on \"StartRepacking\": {ex.Message}", "Error!", MessageBoxButtons.OK);
             }
 
             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
@@ -200,10 +201,7 @@ namespace translator
         {
             string opfFilePath = Path.Combine(destinationPath, "OEBPS", "content.opf");
             if (!File.Exists(opfFilePath))
-            {
-                Console.WriteLine("File does not exist.");
                 return;
-            }
 
             try
             {
@@ -230,17 +228,11 @@ namespace translator
                     metadataElement.Add(dateElement);
 
                     opfDocument.Save(opfFilePath);
-
-                    Console.WriteLine("OPF file updated successfully.");
-                }
-                else
-                {
-                    Console.WriteLine("Metadata element not found.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error updating OPF file: " + ex.Message);
+                MessageBox.Show($"An error occurred on \"UpdateOpfFile\": {ex.Message}", "Error!", MessageBoxButtons.OK);
             }
 
             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
@@ -311,7 +303,7 @@ namespace translator
                     {
                         if (!Directory.Exists(directoryPath2))
                         {
-                            Console.WriteLine("Directory does not exist.");
+                            MessageBox.Show($"Directory does not exist.", "Error!", MessageBoxButtons.OK);
                             return textFiles;
                         }
 
@@ -329,12 +321,12 @@ namespace translator
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("An error occurred: " + ex.Message);
+                        MessageBox.Show($"An error occurred on \"FindTextFilesInDirectory\": {ex.Message}", "Error!", MessageBoxButtons.OK);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("No folder selected.");
+                    MessageBox.Show($"No folder selected.", "Error!", MessageBoxButtons.OK);
                 }
             }
 
@@ -382,6 +374,21 @@ namespace translator
         {
             BookEditorForm bookEditorForm = new BookEditorForm();
             bookEditorForm.Show();
+        }
+
+        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                using Process fileopener = new Process();
+                fileopener.StartInfo.FileName = "explorer";
+                fileopener.StartInfo.Arguments = "\"" + curTitleToFileMap[checkedListBox1.Items[e.Index].ToString()] + "\"";
+                if (File.Exists(curTitleToFileMap[checkedListBox1.Items[e.Index].ToString()]))
+                    fileopener.Start();
+                else
+                    MessageBox.Show("Source file does not exist or has been moved.", "Error!", MessageBoxButtons.OK);
+                checkedListBox1.SetItemChecked(e.Index, false);
+            }
         }
     }
 }
