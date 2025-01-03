@@ -33,7 +33,7 @@ namespace translator
             comboBox1.Items.Add(new ItemDisplay<string>("PT", "Portuguese"));
             comboBox1.Items.Add(new ItemDisplay<string>("PT-BR", "Portuguese (Brazilian)"));
             comboBox1.Items.Add(new ItemDisplay<string>("RO", "Romanian"));
-            comboBox1.Items.Add(new ItemDisplay<string>("RU", "Russian"));
+            //comboBox1.Items.Add(new ItemDisplay<string>("RU", "Russian"));
             comboBox1.Items.Add(new ItemDisplay<string>("SK", "Slovak"));
             comboBox1.Items.Add(new ItemDisplay<string>("SL", "Slovenian"));
             comboBox1.Items.Add(new ItemDisplay<string>("ES", "Spanish"));

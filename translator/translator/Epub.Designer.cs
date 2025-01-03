@@ -21,6 +21,7 @@ namespace translator
             button1 = new System.Windows.Forms.Button();
             button2 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
+            label4 = new System.Windows.Forms.Label();
 
             // 
             // button1
@@ -81,6 +82,16 @@ namespace translator
             button3.Text = "BK";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(703, 405);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(54, 25);
+            label4.TabIndex = 10;
+            label4.Text = "";
         }
 
         private System.Windows.Forms.Button button1;
@@ -89,5 +100,6 @@ namespace translator
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label4;
     }
 }

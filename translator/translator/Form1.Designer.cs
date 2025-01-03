@@ -42,7 +42,7 @@ namespace translator
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(273, 82);
+            label1.Location = new Point(273, 76);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(30, 25);
@@ -52,7 +52,7 @@ namespace translator
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(17, 85);
+            label2.Location = new Point(17, 76);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(54, 25);

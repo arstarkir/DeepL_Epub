@@ -22,6 +22,7 @@ namespace translator
             toDraw.Add(checkedListBox1);
             toDraw.Add(checkBox2);
             toDraw.Add(checkBox3);
+            toDraw.Add(label4);
         }
         public Dictionary<string, string> curTitleToFileMap;
         private TaskCompletionSource<bool> _buttonClickCompletion;
@@ -137,7 +138,7 @@ namespace translator
             string directory = Path.GetDirectoryName(filePath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
-            using (File.Create(filePath));
+            using (File.Create(filePath)) ;
         }
 
         public static void AddChapterToOpf(string opfFilePath, string chapterFileName)
@@ -266,16 +267,16 @@ namespace translator
                 if (!titleToFileMap.ContainsKey(title))
                     titleToFileMap.Add(title, filePath);
                 else
-                    AlreadyContainsKey(titleToFileMap,title, filePath,1);
+                    AlreadyContainsKey(titleToFileMap, title, filePath, 1);
             }
 
             return titleToFileMap;
         }
 
-        public void AlreadyContainsKey(Dictionary<string, string> titleToFileMap, string title,string filePath, int num)
+        public void AlreadyContainsKey(Dictionary<string, string> titleToFileMap, string title, string filePath, int num)
         {
             if (titleToFileMap.ContainsKey(title + num.ToString()))
-                AlreadyContainsKey(titleToFileMap, title, filePath, num+1);
+                AlreadyContainsKey(titleToFileMap, title, filePath, num + 1);
             else
                 titleToFileMap.Add(title + num.ToString(), filePath);
         }
@@ -375,20 +376,37 @@ namespace translator
             BookEditorForm bookEditorForm = new BookEditorForm();
             bookEditorForm.Show();
         }
-
+        int curCharacterCount = 0;
+        double curEstimatedCost = 0;
         private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
+            string filePath = curTitleToFileMap[checkedListBox1.Items[e.Index].ToString()];
+            if (!File.Exists(filePath))
+            {
+                MessageBox.Show("Source file does not exist or has been moved.", "Error!", MessageBoxButtons.OK);
+                return;
+            }
+
             if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
             {
                 using Process fileopener = new Process();
                 fileopener.StartInfo.FileName = "explorer";
-                fileopener.StartInfo.Arguments = "\"" + curTitleToFileMap[checkedListBox1.Items[e.Index].ToString()] + "\"";
-                if (File.Exists(curTitleToFileMap[checkedListBox1.Items[e.Index].ToString()]))
-                    fileopener.Start();
-                else
-                    MessageBox.Show("Source file does not exist or has been moved.", "Error!", MessageBoxButtons.OK);
-                checkedListBox1.SetItemChecked(e.Index, false);
+                fileopener.StartInfo.Arguments = "\"" + filePath + "\"";
+                fileopener.Start();
+                checkedListBox1.SetItemCheckState(e.Index, CheckState.Unchecked);
+                return;
             }
+
+            string fileContent = File.ReadAllText(filePath);
+
+            HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc.LoadHtml(fileContent);
+            int tempCharacterCount = htmlDoc.DocumentNode.InnerText.Length;
+            double tempEstimatedCost = (tempCharacterCount / 40000.0) * 1.0;
+            
+            curCharacterCount += (e.NewValue == CheckState.Unchecked) ? -1 * tempCharacterCount : 1 * tempCharacterCount;
+            curEstimatedCost += (e.NewValue == CheckState.Unchecked) ? -1 * tempEstimatedCost : 1 * tempEstimatedCost;
+            label4.Text = $"{curCharacterCount} Characters\n ~${curEstimatedCost:F2}";
         }
     }
 }
