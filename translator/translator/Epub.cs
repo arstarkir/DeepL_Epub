@@ -393,8 +393,7 @@ namespace translator
                 fileopener.StartInfo.FileName = "explorer";
                 fileopener.StartInfo.Arguments = "\"" + filePath + "\"";
                 fileopener.Start();
-                checkedListBox1.SetItemCheckState(e.Index, CheckState.Unchecked);
-                return;
+                //checkedListBox1.SetItemCheckState(e.Index, CheckState.Unchecked);
             }
 
             string fileContent = File.ReadAllText(filePath);
