@@ -1,7 +1,14 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
+
 namespace translator
 {
-    public partial class Epub
+    public partial class Audiobook
     {
         private System.ComponentModel.IContainer components = null;
         protected override void Dispose(bool disposing)
@@ -12,15 +19,12 @@ namespace translator
             }
             base.Dispose(disposing);
         }
-
         private void InitializeComponent()
         {
             checkBox2 = new CheckBox();
-            checkBox3 = new CheckBox();
             checkedListBox1 = new CheckedListBox();
             button1 = new Button();
             button2 = new Button();
-            button3 = new Button();
             label4 = new Label();
 
             // 
@@ -47,7 +51,7 @@ namespace translator
             // 
             button2.Location = new Point(703, 465);
             button2.Name = "button2";
-            button2.Size = new Size(85+20, 33);
+            button2.Size = new Size(85 + 20, 33);
             button2.TabIndex = 6;
             button2.Text = "I'm Done";
             button2.UseVisualStyleBackColor = true;
@@ -62,26 +66,6 @@ namespace translator
             checkBox2.TabIndex = 8;
             checkBox2.Text = "Full Book";
             checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            checkBox3.AutoSize = true;
-            checkBox3.Location = new Point(468-50-10, 381 + 75);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(85, 29);
-            checkBox3.TabIndex = 8;
-            checkBox3.Text = "Change Cover";
-            checkBox3.UseVisualStyleBackColor = true; 
-            // 
-            // button3
-            // 
-            button3.Location = new Point(107, 87+50);
-            button3.Name = "button3";
-            button3.Size = new Size(40, 33);
-            button3.TabIndex = 11;
-            button3.Text = "BK";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
             // 
             // label4
             // 
@@ -98,8 +82,6 @@ namespace translator
         private CheckedListBox checkedListBox1;
         private Button button2;
         private CheckBox checkBox2;
-        private CheckBox checkBox3;
-        private Button button3;
         private Label label4;
     }
 }

@@ -3,6 +3,8 @@ namespace translator
 {
     partial class Form1
     {
+        List<Control> AllControls = new List<Control>();
+
         /// <summary>
         ///  Required designer variable.
         /// </summary>
@@ -127,6 +129,14 @@ namespace translator
             Controls.Add(textBox1);
             Controls.Add(comboBox1);
             Controls.Add(label1);
+            AllControls.Add(label2);
+            AllControls.Add(comboBox2);
+            AllControls.Add(checkBox1);
+            AllControls.Add(label3);
+            AllControls.Add(textBox1);
+            AllControls.Add(comboBox1);
+            AllControls.Add(label1);
+            
             Margin = new Padding(4, 5, 4, 5);
             Name = "Form1";
             Text = "DeepL_Epub";

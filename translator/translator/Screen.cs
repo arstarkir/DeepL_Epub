@@ -18,13 +18,13 @@ namespace translator
         public List<Control> GetToDraw() { return toDraw; }
         public Form1 GetForm1() { return form1; }
 
-        public void DrawScrean(Control.ControlCollection control)
+        public virtual void DrawScrean(Control.ControlCollection control)
         {
             foreach (var item in toDraw)
                 control.Add(item);
         }
         
-        public void ClearScrean(Control.ControlCollection control)
+        public virtual void ClearScrean(Control.ControlCollection control)
         {
             foreach (var item in toDraw)
                 control.Remove(item);

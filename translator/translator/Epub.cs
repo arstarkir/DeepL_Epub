@@ -389,11 +389,14 @@ namespace translator
 
             if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
             {
-                using Process fileopener = new Process();
-                fileopener.StartInfo.FileName = "explorer";
-                fileopener.StartInfo.Arguments = "\"" + filePath + "\"";
-                fileopener.Start();
-                //checkedListBox1.SetItemCheckState(e.Index, CheckState.Unchecked);
+                if (e.NewValue != CheckState.Unchecked)
+                {
+                    checkedListBox1.SetItemCheckState(e.Index, CheckState.Unchecked);
+                    using Process fileopener = new Process();
+                    fileopener.StartInfo.FileName = "explorer";
+                    fileopener.StartInfo.Arguments = "\"" + filePath + "\"";
+                    fileopener.Start();
+                }
             }
 
             string fileContent = File.ReadAllText(filePath);

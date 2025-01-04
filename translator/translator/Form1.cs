@@ -42,6 +42,7 @@ namespace translator
 
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Screen(0, new List<Control>()), "Non"));
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Epub(1, new List<Control>(), this), ".epub"));
+            comboBox2.Items.Add(new ItemDisplay<Screen>(new Audiobook(1, new List<Control>(), this), "Audiobook"));
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Text(1, new List<Control>(), this), "Text"));
             comboBox2.Items.Add(new ItemDisplay<Screen>(new Text(1, new List<Control>(), this), "Web Files (.html/.xhtml/.htm/.xhtm)"));
             comboBox2.SelectedItem = comboBox2.Items[0];
@@ -72,7 +73,7 @@ namespace translator
 
         public Control GetControlByName(string name)
         {
-            foreach (Control control in Controls)
+            foreach (Control control in AllControls)
             {
                 if (control.Name == name)
                     return control;
