@@ -15,8 +15,7 @@ public static class DeepLTranslation
                 var content = new FormUrlEncodedContent(new[]
                 {
                 new KeyValuePair<string, string>("text", textToTranslate),
-                new KeyValuePair<string, string>("target_lang", targetLangCode)
-            });
+                new KeyValuePair<string, string>("target_lang", targetLangCode)});
 
                 HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
 
@@ -26,9 +25,7 @@ public static class DeepLTranslation
                     return jsonResponse;
                 }
                 else
-                {
                     return $"API Request failed: {response.StatusCode}";
-                }
             }
             catch (Exception ex)
             {
@@ -69,15 +66,13 @@ public static class DeepLTranslation
                 if (response.IsSuccessStatusCode)
                 {
                     if (filePath != newFilePath)
-                    {
                         File.Delete(newFilePath);
-                    }
+
                     return await WaitForFileTranslationCompletion(await response.Content.ReadAsStringAsync(), apiKey, apiUrl);
                 }
                 else
-                {
                     return $"API Request failed: {response.StatusCode} - {response.ReasonPhrase}";
-                }
+
             }
             catch (Exception ex)
             {
@@ -87,9 +82,7 @@ public static class DeepLTranslation
             {
                 fileStream.Close();
                 if (filePath != newFilePath)
-                {
                     File.Delete(newFilePath);
-                }
             }
         }
     }
@@ -106,10 +99,7 @@ public static class DeepLTranslation
         {
             httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
 
-            var content = new FormUrlEncodedContent(new[]
-            {
-            new KeyValuePair<string, string>("document_key", documentKey)
-        });
+            var content = new FormUrlEncodedContent(new[] {new KeyValuePair<string, string>("document_key", documentKey)});
 
             TimeSpan pollingInterval = TimeSpan.FromSeconds(2);
             while (true)
@@ -145,20 +135,13 @@ public static class DeepLTranslation
         {
             httpClient.DefaultRequestHeaders.Add("Authorization", $"DeepL-Auth-Key {apiKey}");
 
-            var content = new FormUrlEncodedContent(new[]
-            {
-                    new KeyValuePair<string, string>("document_key", documentKey)
-                });
+            var content = new FormUrlEncodedContent(new[]{new KeyValuePair<string, string>("document_key", documentKey)});
 
             HttpResponseMessage response = await httpClient.PostAsync(apiUrl + "/" + documentId + "/result", content);
             if (response.IsSuccessStatusCode)
-            {
                 return await response.Content.ReadAsStringAsync();
-            }
             else
-            {
                 return $"API Request failed: {response.StatusCode} - {response.ReasonPhrase}";
-            }
         }
     }
 }

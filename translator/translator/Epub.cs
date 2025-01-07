@@ -44,7 +44,7 @@ namespace translator
                         File.Copy(filePath, newFilePath);
 
                         string extractPath = Path.Combine(workingDirectory, Path.GetFileNameWithoutExtension(filePath));
-                        if (!File.Exists(newFilePath))
+                        if (!File.Exists(extractPath))
                         {
                             Directory.CreateDirectory(extractPath);
                             ZipFile.ExtractToDirectory(newFilePath, extractPath);
