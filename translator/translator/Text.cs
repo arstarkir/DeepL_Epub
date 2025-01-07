@@ -1,16 +1,9 @@
 ﻿using NAudio.Wave;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Compression;
-using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
+
 
 namespace translator
 {
@@ -245,14 +238,7 @@ namespace translator
 
     public class TextToSpeech
     {
-        private readonly string _apiKey;
-
-        public TextToSpeech(string apiKey)
-        {
-            _apiKey = apiKey;
-        }
-
-        public async Task<string> GenerateSpeechAndSaveAsync(string textToConvert, string voiceId, string outputFilePath)
+        public async Task<string> GenerateSpeechAndSaveAsync(string textToConvert, string voiceId, int id)
         {
             var payload = new
             {
@@ -274,10 +260,10 @@ namespace translator
                 if (response.IsSuccessStatusCode)
                 {
                     byte[] audioData = await response.Content.ReadAsByteArrayAsync();
-                    string tempMp3Path = Path.Combine(Path.GetTempPath(), $"tempAudio{id}.mp3");
+                    string tempMp3Path = Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio{id}.mp3");
                     await File.WriteAllBytesAsync(tempMp3Path, audioData);
 
-                    string wavFilePath = outputFilePath;
+                    string wavFilePath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio",Path.GetFileNameWithoutExtension(tempMp3Path)+".wav");
                     using (var mp3Reader = new Mp3FileReader(tempMp3Path))
                     using (var waveWriter = new WaveFileWriter(wavFilePath, mp3Reader.WaveFormat))
                     {

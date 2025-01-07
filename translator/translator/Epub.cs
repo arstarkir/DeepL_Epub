@@ -1,13 +1,8 @@
-﻿using Microsoft.VisualBasic.Devices;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Diagnostics;
-using System.IO;
 using System.IO.Compression;
 using System.Text;
-using System.Windows.Forms;
 using System.Xml.Linq;
-using NAudio.Wave;
 
 namespace translator
 {
