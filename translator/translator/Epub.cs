@@ -7,6 +7,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using NAudio.Wave;
 
 namespace translator
 {

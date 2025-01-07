@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using NAudio.Wave;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -106,7 +108,6 @@ namespace translator
                 }
             }
         }
-
         public void ForceFileCreate(string filePath)
         {
             string directory = Path.GetDirectoryName(filePath);
@@ -239,6 +240,58 @@ namespace translator
             curCharacterCount += (e.NewValue == CheckState.Unchecked) ? -1 * tempCharacterCount : 1 * tempCharacterCount;
             curEstimatedCost += (e.NewValue == CheckState.Unchecked) ? -1 * tempEstimatedCost : 1 * tempEstimatedCost;
             label4.Text = $"{curCharacterCount} Characters\n ~${curEstimatedCost:F2}";
+        }
+    }
+
+    public class TextToSpeech
+    {
+        private readonly string _apiKey;
+
+        public TextToSpeech(string apiKey)
+        {
+            _apiKey = apiKey;
+        }
+
+        public async Task<string> GenerateSpeechAndSaveAsync(string textToConvert, string voiceId, string outputFilePath)
+        {
+            var payload = new
+            {
+                text = textToConvert,
+                model_id = "eleven_monolingual_v1"
+            };
+
+            string jsonPayload = JsonConvert.SerializeObject(payload);
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("xi-api-key", _apiKey);
+
+                HttpResponseMessage response = await client.PostAsync(
+                    $"https://api.elevenlabs.io/v1/text-to-speech/{voiceId}/stream",
+                    new StringContent(jsonPayload, Encoding.UTF8, "application/json")
+                );
+
+                if (response.IsSuccessStatusCode)
+                {
+                    byte[] audioData = await response.Content.ReadAsByteArrayAsync();
+                    string tempMp3Path = Path.Combine(Path.GetTempPath(), $"tempAudio{id}.mp3");
+                    await File.WriteAllBytesAsync(tempMp3Path, audioData);
+
+                    string wavFilePath = outputFilePath;
+                    using (var mp3Reader = new Mp3FileReader(tempMp3Path))
+                    using (var waveWriter = new WaveFileWriter(wavFilePath, mp3Reader.WaveFormat))
+                    {
+                        mp3Reader.CopyTo(waveWriter);
+                    }
+
+                    return wavFilePath;
+                }
+                else
+                {
+                    var errorDetails = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Error calling ElevenLabs API: {response.StatusCode}. Details: {errorDetails}");
+                }
+            }
         }
     }
 }
