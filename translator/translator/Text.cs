@@ -1,10 +1,10 @@
 ﻿using HtmlAgilityPack;
 using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Text;
-
 
 namespace translator
 {
@@ -78,7 +78,15 @@ namespace translator
                         {
                             checkedListBox1.Items.Add(title);
                         }
+                        
+                        IEnumerable<string> ss = new string[] { Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio0.wav"), 
+                            Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio1.wav"),
+                        Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio2.wav"),
+                            Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio3.wav"),
+                            Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio4.wav"),
+                            Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio5.wav")  };
 
+                        Concatenate(Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", "combinedAudio.wav"), ss);
                         await WaitForButtonPressAsync();
 
                         Form1 form1 = GetForm1();
@@ -91,15 +99,49 @@ namespace translator
                         List<string> checkedFilePaths = (checkBox2.Checked) ? textFolderPath :
                             checkedListBox1.CheckedItems.OfType<string>().ToList().Select(title => curTitleToFileMap[title]).ToList();
                         GetForm1().Controls.Add(progressBar1);
-                        progressBar1.Maximum = checkedFilePaths.Count * 2 + 3;
-
+                        progressBar1.Maximum = checkedFilePaths.Count*2 + 1;
+                        int fileID = 0;
                         foreach (var checkedFilePath in checkedFilePaths)
                         {
+                            await GenerateSpeechAndSaveAsync(ExtractTextFromHtml(checkedFilePath), "pqHfZKP75CvOlQylNhV4", fileID);
+                            fileID++;
                             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
                         }
+                        
                         GetForm1().Controls.Remove(progressBar1);
                     }
                 }
+            }
+        }
+        public static void Concatenate(string outputFile, IEnumerable<string> sourceFiles)
+        {
+            byte[] buffer = new byte[1024];
+            WaveFileWriter waveFileWriter = null;
+
+            try
+            {
+                foreach (string sourceFile in sourceFiles)
+                {
+                    using (WaveFileReader reader = new WaveFileReader(sourceFile))
+                    {
+                        if (waveFileWriter == null)
+                            waveFileWriter = new WaveFileWriter(outputFile, reader.WaveFormat);
+                        else
+                        {
+                            if (!reader.WaveFormat.Equals(waveFileWriter.WaveFormat))
+                                throw new InvalidOperationException("Can't concatenate WAV Files that don't share the same format");
+                        }
+
+                        int read;
+                        while ((read = reader.Read(buffer, 0, buffer.Length)) > 0)
+                            waveFileWriter.WriteData(buffer, 0, read);
+                    }
+                }
+            }
+            finally
+            {
+                if (waveFileWriter != null)
+                    waveFileWriter.Dispose();
             }
         }
 
@@ -137,7 +179,7 @@ namespace translator
             string directory = Path.GetDirectoryName(filePath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
-            using (File.Create(filePath)) ;
+            using (File.Create(filePath));
         }
 
         public Dictionary<string, string> ExtractTitlesAndMapToFiles(List<string> filePaths)
@@ -226,11 +268,6 @@ namespace translator
             _buttonClickCompletion?.TrySetResult(true);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            BookEditorForm bookEditorForm = new BookEditorForm();
-            bookEditorForm.Show();
-        }
         int curCharacterCount = 0;
         double curEstimatedCost = 0;
         private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -270,8 +307,8 @@ namespace translator
         {
             var payload = new
             {
-                text = textToConvert,
-                model_id = "eleven_monolingual_v1"
+                text = $"{textToConvert}",
+                model_id = "eleven_flash_v2_5"
             };
 
             string jsonPayload = JsonConvert.SerializeObject(payload);
