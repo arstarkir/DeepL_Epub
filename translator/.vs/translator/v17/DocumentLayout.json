@@ -54,8 +54,7 @@
               "RelativeToolTip": "translator\\Epub.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T15:22:50.448Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-04T15:22:50.448Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "translator\\Epub.Designer.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAAYwGYAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T15:22:42.846Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-04T15:22:42.846Z"
             },
             {
               "$type": "Document",
@@ -80,8 +78,7 @@
               "RelativeToolTip": "translator\\Screen.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T14:53:41.297Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-04T14:53:41.297Z"
             },
             {
               "$type": "Document",
@@ -91,7 +88,7 @@
               "RelativeDocumentMoniker": "translator\\Text.cs",
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Text.cs",
               "RelativeToolTip": "translator\\Text.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAwwGIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAwwDIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-04T14:27:01.737Z",
               "EditorCaption": ""
@@ -106,8 +103,7 @@
               "RelativeToolTip": "translator\\Audiobook.Designer.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAYwAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-04T14:19:43.7Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-04T14:19:43.7Z"
             },
             {
               "$type": "Document",
@@ -119,8 +115,7 @@
               "RelativeToolTip": "translator\\Form1.Designer.cs",
               "ViewState": "AgIAAGYAAAAAAAAAAAAYwIsAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-23T11:37:36.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-23T11:37:36.999Z"
             },
             {
               "$type": "Document",
@@ -144,8 +139,7 @@
               "ToolTip": "C:\\Git\\DeepL_Epub\\translator\\translator\\Form1.cs [Design]",
               "RelativeToolTip": "translator\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T19:54:45.925Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-07-23T19:54:45.925Z"
             }
           ]
         }
