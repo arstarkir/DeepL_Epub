@@ -44,3 +44,10 @@ C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.Scre
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.BookEditorForm.resources
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.Text.resources
 C:\Git\DeepL_Epub\translator\translator\obj\Debug\net8.0-windows\translator.Audiobook.resources
+C:\Git\DeepL_Epub\translator\translator\bin\Debug\net8.0-windows\NAudio.dll
+C:\Git\DeepL_Epub\translator\translator\bin\Debug\net8.0-windows\NAudio.Asio.dll
+C:\Git\DeepL_Epub\translator\translator\bin\Debug\net8.0-windows\NAudio.Core.dll
+C:\Git\DeepL_Epub\translator\translator\bin\Debug\net8.0-windows\NAudio.Midi.dll
+C:\Git\DeepL_Epub\translator\translator\bin\Debug\net8.0-windows\NAudio.Wasapi.dll
+C:\Git\DeepL_Epub\translator\translator\bin\Debug\net8.0-windows\NAudio.WinForms.dll
+C:\Git\DeepL_Epub\translator\translator\bin\Debug\net8.0-windows\NAudio.WinMM.dll

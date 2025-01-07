@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using HtmlAgilityPack;
+using NAudio.Wave;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.IO.Compression;
@@ -28,7 +29,7 @@ namespace translator
             Form1 form1 = GetForm1();
             form1.Controls.Remove(form1.GetControlByName("checkBox1"));
             form1.Controls.Remove(form1.GetControlByName("comboBox1"));
-            form1.Controls.Remove(form1.GetControlByName("label1")); 
+            form1.Controls.Remove(form1.GetControlByName("label1"));
             base.DrawScrean(control);
         }
 
@@ -101,6 +102,36 @@ namespace translator
                 }
             }
         }
+
+        public static string ExtractTextFromHtml(string filePath)
+        {
+            var htmlDoc = new HtmlAgilityPack.HtmlDocument();
+            htmlDoc.Load(filePath);
+            var text = ExtractNodeText(htmlDoc.DocumentNode);
+            
+            return string.Join(". ", text.Split(new[] { ". " }, StringSplitOptions.RemoveEmptyEntries)).Trim() + ".";
+        }
+
+        private static string ExtractNodeText(HtmlNode node)
+        {
+            if (node.NodeType == HtmlNodeType.Text)
+                return node.InnerText.Trim();
+
+            string extractedText = string.Empty;
+            foreach (var child in node.ChildNodes)
+            {
+                var childText = ExtractNodeText(child);
+                if (!string.IsNullOrWhiteSpace(childText))
+                {
+                    if (!string.IsNullOrEmpty(extractedText))
+                        extractedText += ". ";
+                    extractedText += childText;
+                }
+            }
+
+            return extractedText.Trim();
+        }
+
         public void ForceFileCreate(string filePath)
         {
             string directory = Path.GetDirectoryName(filePath);
@@ -234,10 +265,7 @@ namespace translator
             curEstimatedCost += (e.NewValue == CheckState.Unchecked) ? -1 * tempEstimatedCost : 1 * tempEstimatedCost;
             label4.Text = $"{curCharacterCount} Characters\n ~${curEstimatedCost:F2}";
         }
-    }
 
-    public class TextToSpeech
-    {
         public async Task<string> GenerateSpeechAndSaveAsync(string textToConvert, string voiceId, int id)
         {
             var payload = new
@@ -250,7 +278,7 @@ namespace translator
 
             using (HttpClient client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("xi-api-key", _apiKey);
+                client.DefaultRequestHeaders.Add("xi-api-key", GetForm1().GetControlByName("textBox1").Text);
 
                 HttpResponseMessage response = await client.PostAsync(
                     $"https://api.elevenlabs.io/v1/text-to-speech/{voiceId}/stream",
@@ -263,7 +291,7 @@ namespace translator
                     string tempMp3Path = Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio{id}.mp3");
                     await File.WriteAllBytesAsync(tempMp3Path, audioData);
 
-                    string wavFilePath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio",Path.GetFileNameWithoutExtension(tempMp3Path)+".wav");
+                    string wavFilePath = Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", Path.GetFileNameWithoutExtension(tempMp3Path) + ".wav");
                     using (var mp3Reader = new Mp3FileReader(tempMp3Path))
                     using (var waveWriter = new WaveFileWriter(wavFilePath, mp3Reader.WaveFormat))
                     {
