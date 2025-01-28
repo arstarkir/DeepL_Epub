@@ -53,7 +53,7 @@ namespace translator
 
         private void OnApplicationExit(object sender, EventArgs e)
         {
-            CleanRepackingFolder();
+            //CleanRepackingFolder();
         }
 
         private void CleanRepackingFolder()

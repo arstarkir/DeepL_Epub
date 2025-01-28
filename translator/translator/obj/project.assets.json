@@ -594,23 +594,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Arstarkir\\.nuget\\packages\\": {},
+    "C:\\Users\\arsta\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Git\\DeepL_Epub\\translator\\translator\\translator.csproj",
+      "projectUniqueName": "C:\\Users\\arsta\\OneDrive\\Документи\\GitHub\\DeepL_Epub\\translator\\translator\\translator.csproj",
       "projectName": "translator",
-      "projectPath": "C:\\Git\\DeepL_Epub\\translator\\translator\\translator.csproj",
-      "packagesPath": "C:\\Users\\Arstarkir\\.nuget\\packages\\",
-      "outputPath": "C:\\Git\\DeepL_Epub\\translator\\translator\\obj\\",
+      "projectPath": "C:\\Users\\arsta\\OneDrive\\Документи\\GitHub\\DeepL_Epub\\translator\\translator\\translator.csproj",
+      "packagesPath": "C:\\Users\\arsta\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\arsta\\OneDrive\\Документи\\GitHub\\DeepL_Epub\\translator\\translator\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Arstarkir\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\arsta\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -619,7 +619,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -676,7 +675,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

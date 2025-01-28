@@ -79,14 +79,6 @@ namespace translator
                             checkedListBox1.Items.Add(title);
                         }
                         
-                        IEnumerable<string> ss = new string[] { Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio0.wav"), 
-                            Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio1.wav"),
-                        Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio2.wav"),
-                            Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio3.wav"),
-                            Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio4.wav"),
-                            Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", $"tempAudio5.wav")  };
-
-                        Concatenate(Path.Combine(Directory.GetCurrentDirectory(), "RepackingAudio", "combinedAudio.wav"), ss);
                         await WaitForButtonPressAsync();
 
                         Form1 form1 = GetForm1();
@@ -310,7 +302,7 @@ namespace translator
                 text = $"{textToConvert}",
                 model_id = "eleven_flash_v2_5"
             };
-
+        
             string jsonPayload = JsonConvert.SerializeObject(payload);
 
             using (HttpClient client = new HttpClient())

@@ -47,7 +47,8 @@ namespace translator
                         if (!File.Exists(extractPath))
                         {
                             Directory.CreateDirectory(extractPath);
-                            ZipFile.ExtractToDirectory(newFilePath, extractPath);
+                            if (!File.Exists(newFilePath))
+                                ZipFile.ExtractToDirectory(newFilePath, extractPath);
                         }
 
 
