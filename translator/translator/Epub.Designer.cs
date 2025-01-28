@@ -20,7 +20,6 @@ namespace translator
             checkedListBox1 = new CheckedListBox();
             button1 = new Button();
             button2 = new Button();
-            button3 = new Button();
             label4 = new Label();
 
             // 
@@ -73,16 +72,6 @@ namespace translator
             checkBox3.Text = "Change Cover";
             checkBox3.UseVisualStyleBackColor = true; 
             // 
-            // button3
-            // 
-            button3.Location = new Point(107, 87+50);
-            button3.Name = "button3";
-            button3.Size = new Size(40, 33);
-            button3.TabIndex = 11;
-            button3.Text = "BK";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -99,7 +88,6 @@ namespace translator
         private Button button2;
         private CheckBox checkBox2;
         private CheckBox checkBox3;
-        private Button button3;
         private Label label4;
     }
 }

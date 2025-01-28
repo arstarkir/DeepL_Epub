@@ -1,6 +1,5 @@
 ﻿using HtmlAgilityPack;
 using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.IO.Compression;
@@ -41,6 +40,7 @@ namespace translator
             form1.Controls.Add(form1.GetControlByName("label1"));
             base.ClearScrean(control);
         }
+
         private async void button1_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -105,6 +105,7 @@ namespace translator
                 }
             }
         }
+
         public static void Concatenate(string outputFile, IEnumerable<string> sourceFiles)
         {
             byte[] buffer = new byte[1024];

@@ -8,20 +8,24 @@ namespace translator
 {
     public partial class Epub : Screen
     {
+        public Dictionary<string, string> curTitleToFileMap;
+        private TaskCompletionSource<bool> _buttonClickCompletion;
+
+        int curCharacterCount = 0;
+        double curEstimatedCost = 0;
+
         public Epub(int id, List<Control> toDraw, Form1 form1) : base(id, toDraw, form1)
         {
             InitializeComponent();
 
             toDraw.Add(button1);
             toDraw.Add(button2);
-            toDraw.Add(button3);
             toDraw.Add(checkedListBox1);
             toDraw.Add(checkBox2);
             toDraw.Add(checkBox3);
             toDraw.Add(label4);
         }
-        public Dictionary<string, string> curTitleToFileMap;
-        private TaskCompletionSource<bool> _buttonClickCompletion;
+
         private async void button1_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -235,6 +239,7 @@ namespace translator
 
             ((ProgressBar)GetForm1().GetControlByName("progressBar1")).PerformStep();
         }
+
         private static void CopyAllFiles(string sourceDirectory, string targetDirectory)
         {
             Directory.CreateDirectory(targetDirectory);
@@ -368,13 +373,6 @@ namespace translator
             _buttonClickCompletion?.TrySetResult(true);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            BookEditorForm bookEditorForm = new BookEditorForm();
-            bookEditorForm.Show();
-        }
-        int curCharacterCount = 0;
-        double curEstimatedCost = 0;
         private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             string filePath = curTitleToFileMap[checkedListBox1.Items[e.Index].ToString()];

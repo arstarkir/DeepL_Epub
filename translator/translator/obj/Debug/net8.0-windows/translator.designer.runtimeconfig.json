@@ -12,8 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\Arstarkir\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Arstarkir\\.nuget\\packages",
+      "C:\\Users\\arsta\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\arsta\\.nuget\\packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ],
     "configProperties": {

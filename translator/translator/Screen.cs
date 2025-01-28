@@ -29,10 +29,5 @@ namespace translator
             foreach (var item in toDraw)
                 control.Remove(item);
         }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            
-        }
     }
 }
