@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\arsta\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\GitHub\\DeepL_Epub\\translator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\users\\arsta\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\github\\deepl_epub\\translator\\translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\users\\arsta\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\github\\deepl_epub\\translator\\translator\\epub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\epub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\users\\arsta\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\github\\deepl_epub\\translator\\translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|solutionrelative:translator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EACBB62A-C527-475B-90C5-2E44C92C1FF5}|translator\\translator.csproj|c:\\users\\arsta\\onedrive\\\u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\github\\deepl_epub\\translator\\translator\\text.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,17 +38,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Epub.cs",
               "DocumentMoniker": "C:\\Users\\arsta\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\GitHub\\DeepL_Epub\\translator\\translator\\Epub.cs",
               "RelativeDocumentMoniker": "translator\\Epub.cs",
-              "ToolTip": "C:\\Users\\arsta\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\GitHub\\DeepL_Epub\\translator\\translator\\Epub.cs",
-              "RelativeToolTip": "translator\\Epub.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAYwC4AAAA2AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\arsta\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\GitHub\\DeepL_Epub\\translator\\translator\\Epub.cs*",
+              "RelativeToolTip": "translator\\Epub.cs*",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwDEAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-04T15:22:50.448Z",
               "EditorCaption": ""
@@ -104,7 +104,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\arsta\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0438\\GitHub\\DeepL_Epub\\translator\\translator\\Form1.cs",
               "RelativeDocumentMoniker": "translator\\Form1.cs",

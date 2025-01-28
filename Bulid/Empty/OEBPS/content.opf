@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package version="2.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:identifier opf:scheme="UUID" id="BookId">urn:uuid:8c2771b1-420a-4b0a-adc7-e4effdb9aaf2</dc:identifier>
+    <dc:language>UK</dc:language>
+    <dc:title>Сенека Молодший - Про Гнів</dc:title>
+    <meta name="Sigil version" content="2.3.1"/>
+    <dc:date opf:event="modification" xmlns:opf="http://www.idpf.org/2007/opf">2024-12-23</dc:date>
+    <meta name="Sigil version" content="2.2.1"/>
+    <dc:date opf:event="modification">2024-08-27</dc:date>
+    <meta name="cover" content="cover"/>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="aboutTheProject.html" href="Text/aboutTheProject.html" media-type="application/xhtml+xml"/>
+    <item id="ida9d97f215f6f449f8b8aa78cb051fe26" href="Text/container.xml" media-type="application/xhtml+xml"/>
+    <item id="cover" href="Images/cover.jpg" media-type="image/jpeg"/>
+    <item id="x1724095459801-4a57949b-b684-4686-9fb4-06fa4cd2e968_1.jpg" href="Images/1724095459801-4a57949b-b684-4686-9fb4-06fa4cd2e968_1.jpg" media-type="image/jpeg"/>
+    <item id="x1724095459801-4a57949b-b684-4686-9fb4-06fa4cd2e968_2.jpg" href="Images/1724095459801-4a57949b-b684-4686-9fb4-06fa4cd2e968_2.jpg" media-type="image/jpeg"/>
+    <item id="SpetialThanks.html" href="Text/SpetialThanks.html" media-type="application/xhtml+xml"/>
+    <item id="photo_2024-09-15_13-21-36.jpg" href="Images/cover.jpg" media-type="image/jpeg"/>
+    <item id="SpetialThanks.html" href="Text/SpetialThanks.html" media-type="application/xhtml+xml"/>
+    <item id="photo_2024-08-26_14-00-54.jpg" href="Images/cover.jpg" media-type="image/jpeg"/>
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="aboutTheProject.html"/>
+    <itemref idref="SpetialThanks.html"/>
+    <itemref idref="ida9d97f215f6f449f8b8aa78cb051fe26"/>
+  </spine>
+</package>

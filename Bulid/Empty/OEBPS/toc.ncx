@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE ncx PUBLIC "-//NISO//DTD ncx 2005-1//EN"
+ "http://www.daisy.org/z3986/2005/ncx-2005-1.dtd"><ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+  <head>
+    <meta name="dtb:uid" content="urn:uuid:8c2771b1-420a-4b0a-adc7-e4effdb9aaf6"/>
+    <meta name="dtb:depth" content="0"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>(Дельфійська антична класика) Сенека - Дельфи Повне зібрання творів Сенеки Молодшого - Дельфійська класика UK</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="navPoint-1" playOrder="1">
+      <navLabel>
+        <text>Старт</text>
+      </navLabel>
+    </navPoint>
+  </navMap>
+</ncx>
