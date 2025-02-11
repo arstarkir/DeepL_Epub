@@ -48,12 +48,12 @@ namespace translator
                         File.Copy(filePath, newFilePath);
 
                         string extractPath = Path.Combine(workingDirectory, Path.GetFileNameWithoutExtension(filePath));
-                        if (!File.Exists(extractPath))
-                        {
-                            Directory.CreateDirectory(extractPath);
-                            if (!File.Exists(newFilePath))
-                                ZipFile.ExtractToDirectory(newFilePath, extractPath);
-                        }
+
+                        if (Directory.Exists(extractPath))
+                            Directory.Delete(extractPath, true);
+
+                        Directory.CreateDirectory(extractPath);
+                        ZipFile.ExtractToDirectory(newFilePath, extractPath);
 
 
                         List<string> textFolderPath = FindTextFilesInDirectory(extractPath);
